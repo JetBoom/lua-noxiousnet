@@ -1,0 +1,205 @@
+function MakepNoxOptions()
+	if pChatOptions and pChatOptions:IsValid() then
+		return
+	end
+
+	local pan, lab, check, slider
+
+	local wid, hei = 360, 460
+
+	local Window = vgui.Create("DEXRoundedFrame")
+	Window:SetSkin("Default")
+	Window:SetColor(Color(0, 0, 0, 220))
+	Window:SetSize(wid, hei)
+	Window:SetTitle("Options")
+	Window:SetDeleteOnClose(true)
+	Window:SetKeyboardInputEnabled(false)
+	pChatOptions = Window
+
+	local panlist = vgui.Create("DScrollPanel", Window)
+	panlist:Dock(FILL)
+
+	local memberlevel = MySelf:GetMemberLevel()
+
+	if NDB.MemberPersonalChatColors[memberlevel] then
+		pan = vgui.Create("DEXRoundedPanel", panlist)
+		lab = vgui.Create("DLabel", pan)
+		lab:SetFont("dexfont_med")
+		lab:SetText("Membership options")
+		lab:SetTextColor(COLOR_LIMEGREEN)
+		lab:SizeToContents()
+		lab:SetContentAlignment(5)
+		lab:Dock(FILL)
+		pan:SetTall(lab:GetTall() + 8)
+		pan:Dock(TOP)
+		pan:DockMargin(0, 16, 0, 0)
+
+		lab = EasyLabel(panlist, "Personal chat color")
+		lab:Dock(TOP)
+		local colpicker = vgui.Create("DColorMixer", panlist)
+		colpicker:SetAlphaBar(false)
+		colpicker:SetTall(128)
+		colpicker:SetColor(table.Copy(MySelf.PersonalChatColor or color_white))
+		colpicker.UpdateConVars = function(cp, col)
+			RunConsoleCommand("ndb_setdefaultchatcolor", math.Clamp(col.r, 1, 255), math.Clamp(col.g, 1, 255), math.Clamp(col.b, 1, 255))
+		end
+		colpicker:Dock(TOP)
+	end
+
+	if memberlevel == MEMBER_DIAMOND then
+		slider = vgui.Create("DEXNumSlider", panlist)
+		slider:SetText("Voice pitch (emotes)")
+		slider:SetValue(MySelf.VoicePitch or 100)
+		slider:SetDecimals(0)
+		slider:SetMin(50)
+		slider:SetMax(200)
+		slider.OnValueChanged = function(me, value)
+			timer.Create("voicepitch", 0.5, 1, function()
+				net.Start("nox_voicepitch")
+					net.WriteUInt(tonumber(value), 8)
+				net.SendToServer()
+			end)
+		end
+		slider:Dock(TOP)
+	end
+
+	pan = vgui.Create("DEXRoundedPanel", panlist)
+	lab = vgui.Create("DLabel", pan)
+	lab:SetFont("dexfont_med")
+	lab:SetText("Chat")
+	lab:SetTextColor(color_white)
+	lab:SizeToContents()
+	lab:SetContentAlignment(5)
+	lab:Dock(FILL)
+	pan:SetTall(lab:GetTall() + 8)
+	pan:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Time stamp chat messages")
+	check:SetConVar("nox_chatbox_timestamps")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	slider = vgui.Create("DEXNumSlider", panlist)
+	slider:SetDecimals(0)
+	slider:SetMinMax(1, 60)
+	slider:SetConVar("nox_chatbox_messagelifetime")
+	slider:SetText("Message display time")
+	slider:SizeToContents()
+	slider:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Small chat avatars")
+	check:SetConVar("nox_chatbox_smallavatars")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Ignore all messages from players")
+	check:SetConVar("nox_chatbox_ignoreplayers")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Ignore all messages from the system")
+	check:SetConVar("nox_chatbox_ignoresystem")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Ignore player connect messages")
+	check:SetConVar("nox_chatbox_ignoreconnect")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Ignore player disconnect messages")
+	check:SetConVar("nox_chatbox_ignoredisconnect")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Ignore personal chat colors")
+	check:SetConVar("nox_chatbox_nocolors")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	pan = vgui.Create("DEXRoundedPanel", panlist)
+	lab = vgui.Create("DLabel", pan)
+	lab:SetFont("dexfont_med")
+	lab:SetText("Sound and Voice")
+	lab:SetTextColor(color_white)
+	lab:SizeToContents()
+	lab:SetContentAlignment(5)
+	lab:Dock(FILL)
+	pan:SetTall(lab:GetTall() + 8)
+	pan:Dock(TOP)
+	pan:DockMargin(0, 16, 0, 0)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Don't play emote sounds")
+	check:SetConVar("nox_chatbox_ignoreemotes")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Listen to 12 year olds (Ballpit)")
+	check:SetConVar("nox_ballpit")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	pan = vgui.Create("DEXRoundedPanel", panlist)
+	lab = vgui.Create("DLabel", pan)
+	lab:SetFont("dexfont_med")
+	lab:SetText("Costumes")
+	lab:SetTextColor(color_white)
+	lab:SizeToContents()
+	lab:SetContentAlignment(5)
+	lab:Dock(FILL)
+	pan:SetTall(lab:GetTall() + 8)
+	pan:Dock(TOP)
+	pan:DockMargin(0, 16, 0, 0)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Enable costumes (hats and other items)")
+	check:SetConVar("nox_displayhats")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	slider = vgui.Create("DEXNumSlider", panlist)
+	slider:SetDecimals(0)
+	slider:SetMinMax(0, 400)
+	slider:SetConVar("nox_costumemodellimit")
+	slider:SetText("Costume model render limit (0 = infinite)")
+	slider:SizeToContents()
+	slider:Dock(TOP)
+
+	pan = vgui.Create("DEXRoundedPanel", panlist)
+	lab = vgui.Create("DLabel", pan)
+	lab:SetFont("dexfont_med")
+	lab:SetText("Other")
+	lab:SetTextColor(color_white)
+	lab:SizeToContents()
+	lab:SetContentAlignment(5)
+	lab:Dock(FILL)
+	pan:SetTall(lab:GetTall() + 8)
+	pan:Dock(TOP)
+	pan:DockMargin(0, 16, 0, 0)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Display Silver floaters")
+	check:SetConVar("nox_silverfloaters")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	check = vgui.Create("DCheckBoxLabel", panlist)
+	check:SetText("Disable player sprays")
+	check:SetConVar("cl_playerspraydisable")
+	check:SizeToContents()
+	check:Dock(TOP)
+
+	Window:Center()
+	Window:SetSkin("Default")
+	Window:SetVisible(true)
+	Window:MakePopup()
+end
