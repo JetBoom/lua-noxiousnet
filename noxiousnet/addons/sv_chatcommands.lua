@@ -74,6 +74,24 @@ NDB.AddChatCommand("rtv", RTV)
 NDB.AddChatCommand("!rtv", RTV)
 NDB.AddChatCommand("/rtv", RTV)
 
+NDB.AddChatCommand("/subway", function(sender, text)
+	sender:SendLua("gui.OpenURL(\"https://order.subway.com/Stores/Find.aspx?pid=1#pg1\")")
+
+	return ""
+end)
+
+NDB.AddChatCommand("/css", function(sender, text)
+	sender:SendLua("gui.OpenURL(\"http://www.noxiousnet.com/forums/index.php?topic=20384.0\")")
+
+	return ""
+end)
+
+NDB.AddChatCommand("/fps", function(sender, text)
+	sender:SendLua("gui.OpenURL(\"http://www.noxiousnet.com/forums/index.php?topic=20394.0\")")
+
+	return ""
+end)
+
 NDB.AddChatCommand("/roll", function(sender, text)
 	text = string.match(text, "/roll%s(.*)")
 	if not text or #text == 0 then return "" end

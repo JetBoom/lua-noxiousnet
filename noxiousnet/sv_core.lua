@@ -64,7 +64,7 @@ include("addons/sv_retardchecker.lua")
 --include("addons/sv_masterfix.lua")
 
 include("addons/promotion_codes.lua")
-include("addons/promotion_forums.lua")
+--include("addons/promotion_forums.lua")
 include("addons/promotion_tribes.lua")
 include("addons/promotion_truepatriot.lua")
 
@@ -79,7 +79,7 @@ BroadcastLua = gmod.BroadcastLua
 
 function NDB.IsOnline(net)
 	for _, pl in pairs(player.GetAll()) do
-		if pl:AccountID() == net then
+		if pl:AccountNumber() == net then
 			print("Person is currently connected as "..pl:Name()..".")
 			return pl
 		end
@@ -276,7 +276,7 @@ local function PlayerReady(pl)
 		pl:UpdateVoicePitch()
 	end
 
-	local costumeauthorfile = "costumeauthors/"..pl:AccountID()..".txt"
+	local costumeauthorfile = "costumeauthors/"..pl:AccountNumber()..".txt"
 	if file.Exists(costumeauthorfile, "DATA") then
 		local amount = tonumber(file.Read(costumeauthorfile, "DATA"))
 		file.Delete(costumeauthorfile)

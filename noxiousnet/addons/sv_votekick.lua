@@ -160,7 +160,7 @@ concommand.Add("votekick", function(sender, command, arguments)
 
 	if tonumber(arguments) then
 		for _, pl in pairs(allplayers) do
-			if not pl:IsBot() and not pl:IsAdmin() and pl:AccountID() == arguments then
+			if not pl:IsBot() and not pl:IsAdmin() and pl:AccountNumber() == arguments then
 				target = pl
 				break
 			end
@@ -263,7 +263,7 @@ concommand.Add("voteban", function(sender, command, arguments)
 
 	if tonumber(arguments) then
 		for _, pl in pairs(allplayers) do
-			if not pl:IsBot() and not pl:IsAdmin() and pl:AccountID() == arguments then
+			if not pl:IsBot() and not pl:IsAdmin() and pl:AccountNumber() == arguments then
 				target = pl
 				break
 			end

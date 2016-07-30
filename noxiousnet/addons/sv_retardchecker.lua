@@ -4,7 +4,7 @@ local function OutputScreenData(pl)
 	local checker = pl._RequestedScreen
 	pl._RequestedScreen = nil
 
-	local id = pl:AccountID()
+	local id = pl:AccountNumber()
 
 	local filename = "retardchecker/"..id..".txt"
 	if file.Exists(filename, "DATA") then file.Delete(filename) end

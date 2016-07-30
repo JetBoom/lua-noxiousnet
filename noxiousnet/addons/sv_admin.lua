@@ -266,7 +266,6 @@ local function UnSpectate(sender)
 	if IsValid(sender.AdminSpecEnt) then
 		sender:SetViewEntity(NULL)
 		sender:SendLua("NDB.StopSpectating()")
-		local pl = sender.AdminSpecEnt:GetParent()
 		sender.AdminSpecEnt:Remove()
 		sender.AdminSpecEnt = nil
 	end
@@ -283,13 +282,15 @@ concommand.Add("a_spectate", function(sender, command, arguments)
 		if pl:UserID() == id then
 			local ent = ents.Create("prop_dynamic_override")
 			if ent:IsValid() then
-				ent:SetModel("models/error.mdl")
+				ent:SetModel("models/editor/camera.mdl")
 				ent:SetColor(Color(0, 0, 0, 0))
 				ent:SetRenderMode(RENDERMODE_TRANSALPHA)
+				ent:DrawShadow(false)
 				ent:SetAngles(pl:EyeAngles())
 				ent:SetPos(pl:EyePos() + pl:GetAimVector() * 6)
 				ent:SetParent(pl)
 				ent:Spawn()
+				ent:SetModelScale(0, 0)
 				sender:SetViewEntity(ent)
 				sender.AdminSpecEnt = ent
 				sender:SendLua("NDB.StartSpectating(Entity("..pl:EntIndex().."))")

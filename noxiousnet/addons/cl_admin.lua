@@ -444,7 +444,7 @@ local function Premade(pl, reasoncode)
 end
 function NDB.AdminMenu(menu, pl)
 	local userid = pl:UserID()
-	local accountid = pl:AccountID()
+	local accountid = pl:AccountNumber()
 	local plmenu = menu:AddSubMenu("Administrate "..pl:Name().." (u:"..userid.." e:"..pl:EntIndex()..")")
 	plmenu.Player = pl
 

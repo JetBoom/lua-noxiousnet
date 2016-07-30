@@ -4,7 +4,7 @@ function NDB.AddSilverDB(net, int)
 
 	int = math.floor(int)
 	for _, pl in pairs(player.GetAll()) do
-		if pl:AccountID() == net then
+		if pl:AccountNumber() == net then
 			Msg("Person is currently connected.\n")
 			if int ~= 0 then
 				pl:AddSilver(int, true)
@@ -40,7 +40,7 @@ end
 
 function NDB.AddGoldMemberDB(net)
 	for _, pl in pairs(player.GetAll()) do
-		if pl:AccountID() == net then
+		if pl:AccountNumber() == net then
 			Msg("Person is currently connected.\n")
 			NDB.AddGoldMember(pl)
 			return
@@ -70,7 +70,7 @@ end
 
 function NDB.AddDiamondMemberDB(net)
 	for _, pl in pairs(player.GetAll()) do
-		if pl:AccountID() == net then
+		if pl:AccountNumber() == net then
 			Msg("Person is currently connected.\n")
 			NDB.AddDiamondMember(pl)
 			return

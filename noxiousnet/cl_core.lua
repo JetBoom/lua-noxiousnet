@@ -310,7 +310,7 @@ function OpenVoteKick(ban)
 			local button = EasyButton(list, pl:Name(), 0, 4)
 			button.DoClick = VoteKickDoClick
 			button.Ban = ban
-			button.ID = pl:AccountID()
+			button.ID = pl:AccountNumber()
 
 			list:AddItem(button)
 		end
@@ -346,7 +346,7 @@ function NDB.GeneralPlayerMenu(pl, popup, x, y)
 			Derma_StringRequest("Silver Transfer", "Transfer how much to "..pl:Name().."?", "0", function(text) RunConsoleCommand("transfersilver", pl:UserID(), text) end, function() end, "OK", "Cancel")
 		end)
 		plmenu:AddSpacer()
-		local accountid = pl:AccountID()
+		local accountid = pl:AccountNumber()
 		plmenu:AddOption("Vote to kick", function() RunConsoleCommand("votekick", accountid) end)
 		plmenu:AddOption("Vote to ban", function() RunConsoleCommand("voteban", accountid) end)
 

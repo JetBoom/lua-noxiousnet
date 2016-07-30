@@ -128,23 +128,23 @@ function meta:GetSilver()
 end
 
 function meta:AccountFolder()
-	return GetAccountFolder(self:AccountID())
+	return GetAccountFolder(self:AccountNumber())
 end
 
-function meta:AccountID()
+function meta:AccountNumber()
 	return GetAccountID(self:SteamID())
 end
 
-function meta:AccountID()
+function meta:AccountNumber()
 	return AccountID(self:SteamID())
 end
 
 function meta:AccountFolder()
-	return AccountFolder(self:AccountID())
+	return AccountFolder(self:AccountNumber())
 end
 
 function meta:AccountFile()
-	return AccountFile(self:AccountID())
+	return AccountFile(self:AccountNumber())
 end
 
 function meta:NoParseName()
