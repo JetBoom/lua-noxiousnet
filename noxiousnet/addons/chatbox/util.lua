@@ -273,7 +273,7 @@ end
 
 function NNChat.CreateEmoticon(filename, attributes, panel, packages)
 	if NNChat.DynamicImages[filename] then
-		return NNChat.CreateIMGDyn("noxiousnetdynimg/"..NNChat.DynamicImages[filename], attributes, panel, packages)
+		return NNChat.CreateIMGDyn(NNChat.DynamicImages[filename], attributes, panel, packages)
 	end
 
 	if IsLocalEmoticon(filename) then
@@ -470,14 +470,15 @@ function PANEL:Init()
 end
 
 function PANEL:SetFileName(fil)
-	self.FileName = "../data/"..fil
-	self.RawFileName = fil
+	self.URL = fil
+	self.RawFileName = string.GetFileFromFilename(fil)
+	self.FileName = "../data/"..self.RawFileName
 	self:Think()
 end
 
-local function FetchDynImage(rawfilename)
+local function FetchDynImage(url, rawfilename)
 	--print("fetching", "http://heavy.noxiousnet.com/"..rawfilename, "material from internet")
-	http.Fetch("http://heavy.noxiousnet.com/"..rawfilename,
+	http.Fetch("https://noxiousnet.com/"..url,
 	function(body, length, headers, code)
 		if not body:lower():find("<html", 1, true) then
 			file.Write(rawfilename, body)
@@ -494,7 +495,7 @@ function PANEL:Think()
 	if time < self.NextThink then return end
 	self.NextThink = time + 0.5
 
-	if not self.RawFileName then return end
+	if not self.URL then return end
 
 	if time >= self.GiveUp then
 		self.Think = nil
@@ -512,7 +513,7 @@ function PANEL:Think()
 		if time >= NextHTTPFetch then
 			NextHTTPFetch = time + 0.75
 			DynMaterialRequested[self.RawFileName] = true
-			FetchDynImage(self.RawFileName)
+			FetchDynImage(self.URL, self.RawFileName)
 		end
 	end
 end

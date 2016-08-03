@@ -97,7 +97,7 @@ function PANEL:Init()
 	but = vgui.Create("NDBAccountBoxButton", self)
 	but:SetButtonText("DONATIONS")
 	but:SizeToContents()
-	but.DoClick = function(me) CloseChat() gui.OpenURL("http://www.noxiousnet.com/donations.php?auto=1") end
+	but.DoClick = function(me) CloseChat() gui.OpenURL("https://noxiousnet.com/shop") end
 	but:DockMargin(bmargin, 0, 0, 0)
 	but:Dock(LEFT)
 end

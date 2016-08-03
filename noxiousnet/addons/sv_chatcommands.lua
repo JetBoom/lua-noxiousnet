@@ -55,7 +55,7 @@ NDB.AddChatCommand("/ping", function(sender, text)
 	end
 end)
 
-NDB.AddChatCommand("/broadcast", function(sender, text)
+--[[NDB.AddChatCommand("/broadcast", function(sender, text)
 	if sender:IsValid() and sender:IsAdmin() and text then
 		text = string.match(text, "/broadcast%s(.+)")
 		if text and #text > 0 then
@@ -65,7 +65,7 @@ NDB.AddChatCommand("/broadcast", function(sender, text)
 	end
 
 	return ""
-end)
+end)]]
 
 local function RTV(sender, text)
 	sender:PrintMessage(HUD_PRINTTALK, "<red>You'll play this map and like it, fucker.</red>")
@@ -80,7 +80,7 @@ NDB.AddChatCommand("/subway", function(sender, text)
 	return ""
 end)
 
-NDB.AddChatCommand("/css", function(sender, text)
+--[[NDB.AddChatCommand("/css", function(sender, text)
 	sender:SendLua("gui.OpenURL(\"http://www.noxiousnet.com/forums/index.php?topic=20384.0\")")
 
 	return ""
@@ -90,7 +90,7 @@ NDB.AddChatCommand("/fps", function(sender, text)
 	sender:SendLua("gui.OpenURL(\"http://www.noxiousnet.com/forums/index.php?topic=20394.0\")")
 
 	return ""
-end)
+end)]]
 
 NDB.AddChatCommand("/roll", function(sender, text)
 	text = string.match(text, "/roll%s(.*)")
@@ -201,16 +201,23 @@ local function CC_Admin(sender, text)
 	text = string.match(text, "/admin%s(.+)")
 	if not text then return end
 
-	opensocket.Broadcast("MessageToAdmins", "<c=255,0,255>[TO ADMINS]</c> "..sender:SteamID().." | "..sender:NoParseName()..": "..text, true)
+	local msg = "<c=255,0,255>[TO ADMINS]</c> "..sender:SteamID().." | "..sender:NoParseName()..": "..text
 
+	--[[opensocket.Broadcast("MessageToAdmins", msg, true)
 	if not sender:IsModerator() then
 		file.Write("lastadminmessagesender.txt", sender:SteamID())
+	end]]
+
+	for _, pl in pairs(player.GetAll()) do
+		if pl:IsModerator() then
+			pl:PrintMessage(HUD_PRINTTALK, msg)
+		end
 	end
 
 	return ""
 end
 
-local function CC_AdminReply(sender, text)
+--[[local function CC_AdminReply(sender, text)
 	if not sender:IsValid() or not sender:IsModerator() or not text then return "" end
 
 	text = string.match(text, "/adminreply%s(.+)")
@@ -224,7 +231,7 @@ local function CC_AdminReply(sender, text)
 	opensocket.Broadcast("MessageToPlayer", file.Read("lastadminmessagesender.txt", "DATA").."§<purple>[ADMIN PM]</purple> <flashhsv>(NN)</flashhsv> <lg>"..sender:NoParseName().."</lg>: "..text, true)
 
 	return ""
-end
+end]]
 
 local function CC_AdminPM(sender, text)
 	if not sender:IsValid() or not sender:IsModerator() or not text then return "" end
@@ -236,14 +243,22 @@ local function CC_AdminPM(sender, text)
 
 	sender:PrintMessage(HUD_PRINTTALK, msg)
 
-	opensocket.Broadcast("MessageToPlayer", steamid.."§"..msg, true)
+	--opensocket.Broadcast("MessageToPlayer", steamid.."§"..msg, true)
+
+	for _, pl in pairs(player.GetAll()) do
+		if pl:SteamID() == steamid then
+			pl:PrintMessage(HUD_PRINTTALK, msg)
+			print("Message to "..pl:Name()..": "..msg)
+			break
+		end
+	end
 
 	return ""
 end
 
 hook.Add("Initialize", "InitializeAdminChatCommand", function()
-	NDB.AddChatCommand("/admin", CC_Admin, "Sends an unlogged message to any admins in the entire network.")
-	NDB.AddChatCommand("/adminreply", CC_AdminReply, "Replies with a private message to the last non-admin that sent an admin message.")
+	NDB.AddChatCommand("/admin", CC_Admin, "Sends an unlogged message to any admins on the server.") --NDB.AddChatCommand("/admin", CC_Admin, "Sends an unlogged message to any admins in the entire network.")
+	--NDB.AddChatCommand("/adminreply", CC_AdminReply, "Replies with a private message to the last non-admin that sent an admin message.")
 	NDB.AddChatCommand("/adminpm", CC_AdminPM, "Sends a PM to <steamid>.")
 end)
 
@@ -540,7 +555,7 @@ end, "Set a player's title. SuperAdmin only.")
 
 local function CC_Donate(pl, text)
 	if pl:IsValidAccountNotify() then
-		pl:SendLua("gui.OpenURL(\"http://www.noxiousnet.com/donations.php?auto=1\")")
+		pl:SendLua("gui.OpenURL(\"https://noxiousnet.com/shop\")")
 	end
 
 	return ""

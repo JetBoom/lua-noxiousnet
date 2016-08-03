@@ -1,5 +1,7 @@
 local SteamGroupID = "103582791429579864"
 
+local InGroup = {}
+
 local function MessageInGroup(pl)
 	if pl:IsValid() and not pl:IsInNoxSteamGroup() then
 		pl:PrintMessage(HUD_PRINTTALK, "Join our Steam group: <lg>www.steamcommunity.com/groups/noxiousnet</lg> for <lg>+10% map voting power</lg>!")
@@ -7,53 +9,40 @@ local function MessageInGroup(pl)
 end
 
 hook.Add("PlayerInitialSpawn", "SteamGroup_PlayerInitialSpawn", function(pl)
-	pl.GroupStatus = pl.GroupStatus or {}
-
-	if pl:RequestGroupStatus(SteamGroupID) then
-		timer.SimpleEx(15, MessageInGroup, pl)
-	end
+	timer.Simple(20, function() MessageInGroup(pl) end)
 end)
 
-hook.Add("GSGroupStatus", "SteamGroup_GSGroupStatus", function(steamid, groupid, member, officer)
-	for _, pl in pairs(player.GetAll()) do
-		if pl:SteamID() == steamid then
-			if member then
-				pl.GroupStatus[groupid] = officer
-			else
-				pl.GroupStatus[groupid] = nil
-			end
+local function RefreshSteamGroupStatus(page)
+	page = page or 1
 
-			break
+	http.Fetch("http://steamcommunity.com/gid/"..SteamGroupID.."/memberslistxml/?xml=1&p="..page, function(body)
+		if not body then return end
+
+		local online = tonumber(body:match("%<membersOnline%>(%d*)%<%/membersOnline%>") or 0) or 0
+		local totalpages = math.ceil(online / 1000)
+
+		if page == 1 then
+			InGroup = {}
 		end
-	end
-end)
+
+		for steamid64 in body:gmatch("%<steamID64%>([0-9]+)%<%/steamID64%>") do
+			InGroup[steamid64] = true
+		end
+
+		if page < totalpages then
+			timer.Simple(2.5, function() RefreshSteamGroupStatus(page + 1) end)
+		else
+			print("Finished refreshing group membership for "..online.." online steamid64s")
+		end
+	end)
+end
+
+timer.Create("RefreshSteamGroupStatus", 600, 0, RefreshSteamGroupStatus)
+hook.Add("InitPostEntity", "RefreshSteamGroupStatus", RefreshSteamGroupStatus)
 
 local meta = FindMetaTable("Player")
 if not meta then return end
 
-function meta:RequestGroupStatus(groupid)
-	if furryfinder then
-		local result, a = pcall(furryfinder.RequestGroupStatus, self:SteamID(), groupid)
-		if result then
-			return a
-		end
-	end
-end
-
-function meta:IsInSteamGroup(groupid)
-	return self.GroupStatus ~= nil and self.GroupStatus[groupid] ~= nil
-end
-
-function meta:IsSteamGroupOfficer(groupid)
-	return self.GroupStatus ~= nil and self.GroupStatus[groupid]
-end
-
 function meta:IsInNoxSteamGroup()
-	return self:IsInSteamGroup(SteamGroupID)
+	return InGroup[self:SteamID64()]
 end
-
-function meta:IsNoxSteamGroupOfficer()
-	return self:IsSteamGroupOfficer(SteamGroupID)
-end
-
-pcall(require, "furryfinder")

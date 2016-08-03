@@ -1,6 +1,6 @@
 local conLastTitle = CreateClientConVar("nox_announcements_lasttitle", "0", true, false)
 hook.Add("Initialize", "Announcements", function()
-	http.Fetch("http://www.noxiousnet.com/latestnewstitle.php", function(contents, length, headers, returncode)
+	http.Fetch("https://noxiousnet.com/latestnewstitle", function(contents, length, headers, returncode)
 	if contents ~= "NULL" and not contents:find("<", 1, true) and length > 0 and conLastTitle:GetString() ~= contents then
 		NEWNEWS = true
 
@@ -27,7 +27,7 @@ function MakepNews()
 
 	local html = vgui.Create("DHTML", frame)
 	html:StretchToParent(8, 24, 8, 8)
-	html:OpenURL("http://www.noxiousnet.com/ingamenews")
+	html:OpenURL("https://noxiousnet.com/ingamenews")
 
 	frame:SetSkin("Default")
 	frame:MakePopup()

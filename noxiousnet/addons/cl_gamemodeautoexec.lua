@@ -77,7 +77,7 @@ hook.Add("BuildHelpMenu", "NDB_ZS_BuildHelpMenu", function(window)
 
 	local urllabel = vgui.Create("DLabelURL", button1)
 	urllabel:SetText("")
-	urllabel:SetURL("http://www.noxiousnet.com/donations.php?auto=1")
+	urllabel:SetURL("https://noxiousnet.com/shop")
 	urllabel:StretchToParent()
 	urllabel:SetMouseInputEnabled(true)
 end)

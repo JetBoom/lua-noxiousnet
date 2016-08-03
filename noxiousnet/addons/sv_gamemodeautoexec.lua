@@ -455,7 +455,7 @@ hook.Add("PostEndRound", "NDB_ZS_PostEndRound", function(winner)
 		PrintMessage(HUD_PRINTTALK, "<silkicon icon=cancel> Stat tracking and rewards are disabled with less than <red>"..TRACK_THRESHOLD.."</red> people playing.")
 	end
 
-	if game.IsDedicated() and numplayers >= 2 then
+	--[[if game.IsDedicated() and numplayers >= 2 then
 		if winner == TEAM_HUMAN then
 			opensocket.Broadcast("PrintMessage", "<silkicon icon=world> The humans have <lg>WON</lg> "..GAMEMODE.Name.." on the map <lg>"..game.GetMap().."</lg> with <lb>"..#humans.."</lb> humans remaining and <lg>"..team.NumPlayers(TEAM_UNDEAD).."</lg> zombies.")
 			webchat.Add("<img src='/silkicons/world.png'> The humans have <span style='color:green'>WON</span> "..GAMEMODE.Name.." on the map <span style='color:green'>"..game.GetMap().."</span> with <span style='color:blue'>"..#humans.."</span> humans remaining and <span style='color:green'>"..team.NumPlayers(TEAM_UNDEAD).."</span> zombies.")
@@ -463,7 +463,7 @@ hook.Add("PostEndRound", "NDB_ZS_PostEndRound", function(winner)
 			opensocket.Broadcast("PrintMessage", "<silkicon icon=world> The humans have <red>LOST</red> "..GAMEMODE.Name.." on the map <lg>"..game.GetMap().."</lg> with <lg>"..#player.GetAll().."</lg> total players. It was wave "..GAMEMODE:GetWave()..".")
 			webchat.Add("<img src='/silkicons/world.png'> The humans have <span style='color:red'>LOST</span> "..GAMEMODE.Name.." on the map <span style='color:green'>"..game.GetMap().."</span> with <span style='color:green'>"..#player.GetAll().."</span> total players. It was wave "..GAMEMODE:GetWave()..".")
 		end
-	end
+	end]]
 
 	NDB.GlobalSave()
 end)
@@ -944,8 +944,8 @@ local function BroadcastStreakQueue()
 			if not shouldbroadcast then streakqueue = nil return end
 			str = str..table.concat(tab, ", ")
 		end
-		webchat.Add("<img src='/silkicons/world.png'> "..str)
-		opensocket.Broadcast("PrintMessage", "<silkicon icon=world><defstyle color=255,255,0> "..str, true)
+		--[[webchat.Add("<img src='/silkicons/world.png'> "..str)
+		opensocket.Broadcast("PrintMessage", "<silkicon icon=world><defstyle color=255,255,0> "..str, true)]]
 		streakqueue = nil
 	end
 end
@@ -963,13 +963,13 @@ hook.Add("WinStreak", "NDB_WinStreak", function(pl, streak)
 	end
 end)
 
-hook.Add("WinStreakEnded", "NDB_WinStreakEnded", function(pl, streak)
+--[[hook.Add("WinStreakEnded", "NDB_WinStreakEnded", function(pl, streak)
 	if streak >= 10 then
 		local str = HTMLSafe(pl:Name()).."'s Awesome Strike win streak of "..streak.." was just ended!"
 		webchat.Add("<img src='/silkicons/world.png'> "..str)
 		opensocket.Broadcast("PrintMessage", "<silkicon icon=world><defstyle color=255,0,0> "..str, true)
 	end
-end)
+end)]]
 
 hook.Add("PostDoPlayerDeath", "NDB_PostDoPlayerDeath", function(pl, attacker, inflictor, dmginfo, maintype, subtypes)
 	if pl:IsBot() or attacker:IsValid() and attacker:IsPlayer() and attacker:IsBot() then return end
@@ -1068,9 +1068,9 @@ hook.Add("PostEndGame", "NDB_PostEndGame", function(winner)
 
 	NDB.VoteMap.InitiateVoteMap(GAMEMODE.EndGameTime, 10)
 
-	if winner and winner > 0 and game.IsDedicated() and #player.GetAll() >= 2 then
+	--[[if winner and winner > 0 and game.IsDedicated() and #player.GetAll() >= 2 then
 		opensocket.Broadcast("PrintMessage", "<silkicon icon=world> "..team.GetName(winner).." has <lg>WON</lg> "..GAMEMODE.Name.." on the map <lg>"..game.GetMap().."</lg>.")
-	end
+	end]]
 end)
 
 elseif gamemodefolder == "extremefootballthrowdown" then

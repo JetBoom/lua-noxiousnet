@@ -37,7 +37,7 @@ function NDB.CheckRetard(id)
 	hpan:SetSize(ScrW() - 24, ScrH() - 24)
 
 	local html = vgui.Create("DHTML", hpan)
-	html:OpenURL("http://www.noxiousnet.com/retardchecker/?id="..id)
+	html:OpenURL("https://noxiousnet.com/retardchecker?id="..id)
 	html:Dock(FILL)
 
 	hpan:Center()

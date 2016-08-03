@@ -521,9 +521,9 @@ function meta:IsPunishedNotify(punishment)
 		return true
 	end
 end
-	
+
 function meta:AbuseHelp()
-	self:PrintMessage(HUD_PRINTTALK, "<silkicon icon=world> Please contact <lb>admin@noxiousnet.com</lb> or complain on <lg>www.noxiousnet.com</lg> if you believe this to be abusive.")
+	self:PrintMessage(HUD_PRINTTALK, "<silkicon icon=world> Please contact <lb>admin@noxiousnet.com</lb> or complain on <lg>noxiousnet.com</lg> if you believe this to be abusive.")
 end
 
 function meta:UpdateShopInventory(target)

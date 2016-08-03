@@ -138,7 +138,7 @@ function MakepTitleChange(target)
 	button:DockPadding(8, 4, 8, 4)
 	button:DockMargin(0, 0, 8, 0)
 	button.DoClick = function()
-		gui.OpenURL("http://www.noxiousnet.com/donations.php?auto=1")
+		gui.OpenURL("https://noxiousnet.com/shop")
 	end
 
 	frame:SetSkin("Default")
@@ -242,7 +242,7 @@ function MakepTitleChange3D(target)
 	button:DockPadding(8, 4, 8, 4)
 	button:DockMargin(0, 0, 8, 0)
 	button.DoClick = function()
-		gui.OpenURL("http://www.noxiousnet.com/donations.php?auto=1")
+		gui.OpenURL("https://noxiousnet.com/shop")
 	end
 
 	frame:SetSkin("Default")

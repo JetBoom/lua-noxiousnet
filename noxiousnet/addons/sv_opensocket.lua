@@ -1,3 +1,5 @@
+if true then return end
+
 opensocket = {}
 opensocket.ThisServerIP = GetConVarString("ip")
 if opensocket.ThisServerIP == "localhost" then opensocket.ThisServerIP = "127.0.0.1" end
@@ -89,7 +91,7 @@ end
 pcall(require, "glsock2")
 if GLSock == nil then return end
 
-local GLSockErrorCodes = 
+local GLSockErrorCodes =
 {
 	[GLSOCK_ERROR_SUCCESS] = "GLSOCK_ERROR_SUCCESS",
 	[GLSOCK_ERROR_ACCESSDENIED] = "GLSOCK_ERROR_ACCESSDENIED",
@@ -475,7 +477,7 @@ local function CallbackReceiveFrom(socket, buffer, ip, port)
 
 	if phrase == opensocket.Phrase then
 		local fromip = fromip_a.."."..fromip_b.."."..fromip_c.."."..fromip_d
-		
+
 		--print("OpenSocket: ReadFrom SUCCESS! Got '"..hookname..":"..msg.."' from "..fromip..":"..fromport)
 
 		if fromip and fromport and hookname then
@@ -508,7 +510,7 @@ hook.Add("ShutDown", "OpenSocketShutDown", opensocket.CloseReceiver)
 --[[pcall(require, "glsock2")
 if GLSock == nil then return end
 
-local GLSockErrorCodes = 
+local GLSockErrorCodes =
 {
 	[GLSOCK_ERROR_SUCCESS] = "GLSOCK_ERROR_SUCCESS",
 	[GLSOCK_ERROR_ACCESSDENIED] = "GLSOCK_ERROR_ACCESSDENIED",

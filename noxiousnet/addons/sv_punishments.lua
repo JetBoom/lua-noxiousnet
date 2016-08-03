@@ -3,7 +3,7 @@ NDB.PunishmentsFile = "suspensions.txt"
 function NDB.LoadPunishments(fil)
 	fil = fil or NDB.PunishmentsFile
 	if file.Exists(fil, "DATA") then
-		local tab = {}
+		--[[local tab = {}
 		for i, line in ipairs(string.Explode("\n", file.Read(fil, "DATA"))) do
 			local puntab = string.Explode("|", line)
 			tab[i] = {
@@ -15,19 +15,21 @@ function NDB.LoadPunishments(fil)
 				["Expires"] = tonumber(puntab[6]) or 0,
 				["Log"] = puntab[7]
 			}
-		end
+		end]]
 
-		NDB.Punishments = tab
+		NDB.Punishments = util.JSONToTable(file.Read(fil, "DATA") or "") or {}
 	end
 end
 
 function NDB.SavePunishments(fil)
-	local buffer = {}
+	--[[local buffer = {}
 	for k, tab in ipairs(NDB.Punishments) do
 		buffer[#buffer + 1] = tostring(tab.SteamID).."|"..string.gsub(tostring(tab.Name), "|", " ").."|"..tostring(tab.Punishment).."|"..string.gsub(tostring(tab.Admin), "|", " ").."|"..string.gsub(tostring(tab.Reason), "|", " ").."|"..tostring(tab.Expires).."|"..tostring(tab.Log or "")
 	end
 
-	file.Write(fil or NDB.PunishmentsFile, table.concat(buffer, "\n"))
+	file.Write(fil or NDB.PunishmentsFile, table.concat(buffer, "\n"))]]
+
+	file.Write(fil or NDB.PunishmentsFile, util.TableToJSON(NDB.Punishments) or "")
 end
 
 function NDB.RemoveAllExpiredPunishments()
@@ -273,7 +275,7 @@ function NDB.AddPunishment(plorsteamidoruserid, punishment, duration, reason, ad
 	if not silent then
 		PrintMessage(HUD_PRINTTALK, msg)
 	end
-	opensocket.Broadcast("MessageToAdmins", "[<pink>"..GetHostName().."</pink>] "..msg)
+	--opensocket.Broadcast("MessageToAdmins", "[<pink>"..GetHostName().."</pink>] "..msg)
 end
 
 function NDB.InstantBan(pl, reason, duration, banner, silent, punishment)

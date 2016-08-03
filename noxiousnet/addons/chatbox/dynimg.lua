@@ -3,10 +3,15 @@ NNChat.DynamicImages = {}
 local RootFailure
 
 local function Load(body)
+	local filename, fileext, base
 	for i, line in ipairs(string.Explode("\n", body)) do
-		local filename, fileext = line:match("([a-zA-Z0-9_%-]-)%.(.+)")
-		if filename then
-			NNChat.DynamicImages[filename] = filename.."."..fileext
+		if i == 1 then
+			base = line
+		else
+			filename, fileext = line:match("([a-zA-Z0-9_%-]-)%.(.+)")
+			if filename then
+				NNChat.DynamicImages[filename] = base..filename.."."..fileext
+			end
 		end
 	end
 end
@@ -36,5 +41,5 @@ end
 
 hook.Add("InitPostEntity", "dynimg", function()
 	file.CreateDir("noxiousnetdynimg")
-	http.Fetch("http://heavy.noxiousnet.com/noxiousnetdynimg/?simple=1", RootSuccess, RootFailure)
+	http.Fetch("https://noxiousnet.com/api/dynimg?simple=1", RootSuccess, RootFailure)
 end)

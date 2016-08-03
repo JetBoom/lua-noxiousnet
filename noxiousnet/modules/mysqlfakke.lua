@@ -10,7 +10,7 @@
 if true then return end
 
 -- This is the default connection. You can set them to nil if you prefer.
-local SQL_URL = "http://www.noxiousnet.com/fakequery.php"
+local SQL_URL = "https://noxiousnet.com/fakequery"
 local SQL_HOST = "localhost"
 local SQL_USER = "root"
 local SQL_PASSWORD = "d1c1R08hcOtFF2123c4C76z78i6nCWy35BIpDh4N0249572yH65Un3DzfMBE"

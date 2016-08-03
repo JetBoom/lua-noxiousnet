@@ -1,3 +1,5 @@
+if true then return end
+
 NDB.LotteryFee = 2000
 
 NDB.LotteryEntrants = {}
