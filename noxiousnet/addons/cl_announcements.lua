@@ -1,4 +1,4 @@
-local conLastTitle = CreateClientConVar("nox_announcements_lasttitle", "0", true, false)
+--[[local conLastTitle = CreateClientConVar("nox_announcements_lasttitle", "0", true, false)
 hook.Add("Initialize", "Announcements", function()
 	http.Fetch("https://noxiousnet.com/latestnewstitle", function(contents, length, headers, returncode)
 	if contents ~= "NULL" and not contents:find("<", 1, true) and length > 0 and conLastTitle:GetString() ~= contents then
@@ -11,7 +11,7 @@ hook.Add("Initialize", "Announcements", function()
 		end)
 	end
 end)
-end)
+end)]]
 
 function MakepNews()
 	NEWNEWS = nil

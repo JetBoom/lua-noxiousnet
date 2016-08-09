@@ -38,7 +38,7 @@ local function RefreshSteamGroupStatus(page)
 end
 
 timer.Create("RefreshSteamGroupStatus", 600, 0, RefreshSteamGroupStatus)
-hook.Add("InitPostEntity", "RefreshSteamGroupStatus", RefreshSteamGroupStatus)
+hook.Add("InitPostEntity", "RefreshSteamGroupStatus", function() timer.Simple(5, RefreshSteamGroupStatus) end)
 
 local meta = FindMetaTable("Player")
 if not meta then return end

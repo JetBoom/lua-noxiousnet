@@ -1,5 +1,27 @@
 NDB.PunishmentsFile = "suspensions.txt"
 
+function NDB.LoadPunishmentsOld(fil)
+	fil = fil or NDB.PunishmentsFile
+	if file.Exists(fil, "DATA") then
+		local tab = {}
+
+		for i, line in ipairs(string.Explode("\n", file.Read(fil, "DATA"))) do
+			local puntab = string.Explode("|", line)
+			tab[i] = {
+				["SteamID"] = puntab[1],
+				["Name"] = puntab[2],
+				["Punishment"] = tonumber(puntab[3]) or 0,
+				["Admin"] = puntab[4],
+				["Reason"] = puntab[5],
+				["Expires"] = tonumber(puntab[6]) or 0,
+				["Log"] = puntab[7]
+			}
+		end
+
+		return tab
+	end
+end
+
 function NDB.LoadPunishments(fil)
 	fil = fil or NDB.PunishmentsFile
 	if file.Exists(fil, "DATA") then
@@ -423,21 +445,16 @@ hook.Add("PlayerPasswordAuth", "PunishmentsPlayerPasswordAuth", function(name, p
 	end
 end)
 
-local function DoHealthMul(pl, mul)
-	if pl:IsValid() then
-		pl:SetMaxHealth(math.max(1, math.ceil(pl:GetMaxHealth() * mul)))
-		pl:SetHealth(math.max(1, math.ceil(pl:Health() * mul)))
-	end
-end
-
 local function EntityTakeDamage_DoubleDamage(ent, dmginfo)
 	if ent:IsPlayer() and ent:IsPunished(PUNISHMENT_DOUBLEDAMAGE) then
+		--dmginfo:SetDamageCustom(dmginfo:GetDamage())
 		dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 	end
 end
 
 local function EntityTakeDamage_InstantDeath(ent, dmginfo)
 	if ent:IsPlayer() and ent:IsPunished(PUNISHMENT_INSTANTDEATH) then
+		--dmginfo:SetDamageCustom(dmginfo:GetDamage())
 		dmginfo:SetDamage(math.max(dmginfo:GetDamage(), ent:Health() * 1.4))
 	end
 end

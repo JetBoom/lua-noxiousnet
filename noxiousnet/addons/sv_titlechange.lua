@@ -164,8 +164,7 @@ concommand.Add("nox_setloadingscreenmessage", function(sender, command, argument
 
 	if #title > 80 or #title <= 0 then return end
 
-	file.Write("loadingmessage.txt", title)
-	file.Write("loadingmessageauthor.txt", sender:Name().." - "..sender:SteamID())
+	file.Write("loadingmessage.txt", util.TableToJSON({message = title, player_name = sender:Name(), player_steamid = sender:SteamID64()}))
 
 	sender:AddSilver(-50000)
 	PrintMessage(HUD_PRINTTALK, "<silkicon icon=world> <lg>"..sender:Name().."</lg> has changed the loading screen.")

@@ -233,7 +233,10 @@ vgui.Register("NDBAccountBoxButton", PANEL, "DButton")
 
 PANEL = {}
 
+local SilverDisplay
 function PANEL:Init()
+	SilverDisplay = self
+
 	self:SetAlpha(200)
 	self:ParentToHUD()
 	self:DockPadding(16, 4, 16, 4)
@@ -291,4 +294,10 @@ hook.Add("InitPostEntity", "CreateAccountBox", function()
 	NDB.AccountFrame = frame
 
 	vgui.Create("NDBSilverPanel")
+end)
+
+hook.Add("EvaluateFilmMode", "NDB", function()
+	if SilverDisplay and SilverDisplay:IsValid() then
+		SilverDisplay:SetVisible(not GAMEMODE.FilmMode)
+	end
 end)

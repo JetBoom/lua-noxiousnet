@@ -1,7 +1,7 @@
 require("mysqloo")
 
-local SQL_HOST = game.IsDedicated() and "localhost" or "game.noxiousnet.com"
-local SQL_USER = "root"
+local SQL_HOST = game.IsDedicated() and "127.0.0.1" or "game.noxiousnet.com"
+local SQL_USER = "jetboom"
 local SQL_PASSWORD = "d1c1R08hcOtFF2123c4C76z78i6nCWy35BIpDh4N0249572yH65Un3DzfMBE"
 local SQL_DB = "nox"
 
