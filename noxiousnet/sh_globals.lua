@@ -35,24 +35,23 @@ NDB.ElderMemberThreshold = 1000
 NDB.CostumeAuthorSilver = 1000
 
 NDB.Servers = {
-{"Zombie Survival",						"192.99.20.148",		27015, "The ONLY official Zombie Survival server. A team of humans try to survive an onslaught of player zombies. When a human dies, they respawn as a zombie.\nKill zombies to get better weapons and use barricades to slow down the oncoming undead.\nZombie players have an assortment of different classes to use each with their own special abilities.", -1, 0},
+{"Zombie Survival",						"game.noxiousnet.com",		27015, "The ONLY official Zombie Survival server. A team of humans try to survive an onslaught of player zombies. When a human dies, they respawn as a zombie.\nKill zombies to get better weapons and use barricades to slow down the oncoming undead.\nZombie players have an assortment of different classes to use each with their own special abilities.", -1, 0},
+{"Extreme Football Throwdown",			"game.noxiousnet.com",		27016, "A simple game based around a ball and two goal. Take some extreme wackyness, momentum based running, and the ability to tackle other players and you get EFT.", -1, 0},
+{"Retro TeamPlay",						"game.noxiousnet.com",		27018, "The game that started it all.\nMagic and technology clash as two or more teams compete against each other to complete objectives.\nFeatures tons of classes, vehicular warfare, strategic combat, and plenty of action.", -1, 0},
+{"Deathrun",							"game.noxiousnet.com",		27019, "Traverse the level as a Runner, avoiding deadly traps activated by the Death players.\nFree your soul by killing Death himself.", -1, 0},
+{"Multiplayer TV",						"game.noxiousnet.com",		27020, "Watch videos together. Supports multiple content providers such as YouTube and Twitch.TV. Players can rent private rooms or use a video queue in public rooms. Don't like a video? Vote to skip it. Players also receive points and Silver for having their videos played without being skipped."},
+{"Pedobear Escape 2",					"game.noxiousnet.com",		27017, "Escape Pedobear! Throw your teammates under the bus to ensure your own survival.", -1, 0}
 --{"Zombie Survival (Classic Mode)",	"192.99.20.148",		27016, "Zombie Survival running on Classic Mode. There is no class switching, no barricading, and things are much faster paced. All zombies are forced to use a special class designed just for this mode.", -1, 0},
-{"Extreme Football Throwdown",			"167.114.207.240",		27015, "A simple game based around a ball and two goal. Take some extreme wackyness, momentum based running, and the ability to tackle other players and you get EFT.", -1, 0},
-{"Retro TeamPlay",						"167.114.207.242",		27015, "The game that started it all.\nMagic and technology clash as two or more teams compete against each other to complete objectives.\nFeatures tons of classes, vehicular warfare, strategic combat, and plenty of action.", -1, 0},
-{"Deathrun",							"167.114.207.244",		27015, "Traverse the level as a Runner, avoiding deadly traps activated by the Death players.\nFree your soul by killing Death himself.", -1, 0},
-{"Multiplayer TV",						"167.114.207.241",		27015, "Watch videos together. Supports multiple content providers such as YouTube and Twitch.TV. Players can rent private rooms or use a video queue in public rooms. Don't like a video? Vote to skip it. Players also receive points and Silver for having their videos played without being skipped."},
-{"Awesome Strike: Source",				"167.114.207.245",		27015, "Awesome Strike is an attempt to create a cooler version of Counter-Strike\nand other tactical shooters while bringing in elements from\nfast-paced action games like DMC, S4, and GunZ. Bullets are physical and take time\nto travel, players can be revived by team members, and objectives are remade\nto be in the faster-paced environment.", -1, 0},
-{"Trouble in Terrorist Town",			"167.114.207.247",		27017, "Our anything-goes, vanilla Trouble in Terrorist Town server.", -1, 0},
-{"Super Mayhem Boxes",					"167.114.207.246",		27015, "A 'Half-2D' physics side-scroller.\nCapture each other's fruit while using an assortment of weapons and powerups.", -1, 0},
+--{"Awesome Strike: Source",				"game.noxiousnet.com",		27015, "Awesome Strike is an attempt to create a cooler version of Counter-Strike\nand other tactical shooters while bringing in elements from\nfast-paced action games like DMC, S4, and GunZ. Bullets are physical and take time\nto travel, players can be revived by team members, and objectives are remade\nto be in the faster-paced environment.", -1, 0},
+--{"Trouble in Terrorist Town",			"game.noxiousnet.com",		27017, "Our anything-goes, vanilla Trouble in Terrorist Town server.", -1, 0},
+--{"Super Mayhem Boxes",					"game.noxiousnet.com",		27015, "A 'Half-2D' physics side-scroller.\nCapture each other's fruit while using an assortment of weapons and powerups.", -1, 0},
 --{"Melonbomber",							"167.114.207.247",		27015, "A clone of the classic Bomberman game. Now in GMod and multiplayer.", -1, 0},
-{"Pedobear Escape 2",					"167.114.207.247",		27015, "Escape Pedobear! Throw your teammates under the bus to ensure your own survival.", -1, 0}
-}
-
 --{"REALLY BAD ROLE PLAY", "65.60.53.27", 27016, "For a limited time only! Enjoy the wonders of roleplaying your favorite sociopathic serial killers."},
 --{"Obby", "65.60.53.26", 27017, "Compete against other players in player-made courses and maps.\nIt's a race to the finish or whatever the creator happens to have in mind!"},
 --{"Multiplayer YouTube", "65.60.53.27", 27019, "Watch videos together. Rewards are given for playing well-liked videos."}
 --{"SandBox", "65.60.53.27", 27018, "NoXiousNet's SandBox server.\nEnjoy pester-free building as new players are required to get building rights from an admin in order to do anything.\nBuilding rights and records are kept in a database so we always know who's actually playing and who's just there to be annoying.", -1, 0},
 --{"Zombie Survival 2", "65.60.53.29", 27015, "An alternate Zombie Survival server.", -1, 0}
+}
 
 AWARDS_CAT_SPECIAL = 1
 AWARDS_CAT_ZS = 2
