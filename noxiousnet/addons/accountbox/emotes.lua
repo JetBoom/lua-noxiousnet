@@ -26,11 +26,13 @@ function MakepEmotes()
 	ListView.DoDoubleClick = function(me, id, line)
 		if line.EmoteID then
 			local soundtab = NDB.EmotesSounds[line.EmoteID]
-			if type(soundtab) == "table" then
+			if soundtab and type(soundtab) == "table" then
 				surface.PlaySound(soundtab[math.random(#soundtab)])
 			else
 				surface.PlaySound(soundtab)
 			end
+		elseif line.DynamicEmoteTrigger then
+			NDB.PlayDynSound(line.DynamicEmoteSound, LocalPlayer())
 		end
 	end
 	ListView.RefreshList = function(me, search)
@@ -44,6 +46,13 @@ function MakepEmotes()
 					me:AddLine(emote, NDB.EmotesSounds[i]).EmoteID = i
 				end
 			end
+		end
+
+		local line
+		for trigger, filename in pairs(NDB.DynamicEmoteSounds) do
+			line = me:AddLine(trigger, filename..".ogg")
+			line.DynamicEmoteTrigger = trigger
+			line.DynamicEmoteSound = filename
 		end
 	end
 	ListView:RefreshList()

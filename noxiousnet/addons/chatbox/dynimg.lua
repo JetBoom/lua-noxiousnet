@@ -17,9 +17,7 @@ local function Load(body)
 end
 
 local function RootSuccess(body, length, headers, code)
-	--body = body:lower()
-
-	if body:sub(1, 6) ~= "DYNIMG" then RootFailure() return end
+	if not body or body:sub(1, 6) ~= "DYNIMG" then RootFailure() return end
 
 	body = body:sub(7)
 

@@ -139,18 +139,6 @@ function meta:UpdateDB(buffer, complete)
 	self:PrintMessage(HUD_PRINTCONSOLE, "Your NoXiousNet account has been saved.")
 end
 
-function meta:CompleteUpdateDB(buffer)
-	for _, key in pairs(NDB.PlayerKeys) do
-		self:SetKeyDirty(key)
-	end
-	for _, g in pairs(NDB.PlayerKeysForGamemode) do
-		for __, key in pairs(g) do
-			self:SetKeyDirty(key)
-		end
-	end
-	self:UpdateDB(buffer, true)
-end
-
 local function InitQueryInsert(query, result, pl)
 	if IsValid(pl) then
 		pl._VALIDACCOUNT_ = true

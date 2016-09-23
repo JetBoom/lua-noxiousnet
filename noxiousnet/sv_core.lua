@@ -455,54 +455,9 @@ hook.Add("Initialize", "NDBInitialize", function()
 	file.CreateDir("retardchecker")
 
 	resource.AddWorkshop("187693631") -- Static content pack (files below)
-	resource.AddWorkshop("237618708") -- Dynamic content pack (emotes)
+	--resource.AddWorkshop("237618708") -- Dynamic content pack (emotes)
 
 	--[[resource.AddFile("materials/noxctf/sprite_flame.vmt")
-
-	resource.AddFile("sound/speach/ael.ogg")
-	resource.AddFile("sound/speach/almostharvestingseason.ogg")
-	resource.AddFile("sound/speach/awthatstoobad.ogg")
-	resource.AddFile("sound/speach/bikehorn.ogg")
-	resource.AddFile("sound/speach/breakyourlegs.ogg")
-	resource.AddFile("sound/speach/cheesybakedpotato.ogg")
-	resource.AddFile("sound/speach/drinkfromyourskull.ogg")
-	resource.AddFile("sound/speach/feeltoburn.ogg")
-	resource.AddFile("sound/speach/female_farquadd.ogg")
-	resource.AddFile("sound/speach/gabe_thanks.ogg")
-	resource.AddFile("sound/speach/gabe_wtw.ogg")
-	resource.AddFile("sound/speach/gabe_gaben.ogg")
-	resource.AddFile("sound/speach/gank.ogg")
-	resource.AddFile("sound/speach/givemethebutter.ogg")
-	resource.AddFile("sound/speach/go.ogg")
-	resource.AddFile("sound/speach/gogalo.ogg")
-	resource.AddFile("sound/speach/greatatyourjunes.ogg")
-	resource.AddFile("sound/speach/imthecoolest.ogg")
-	resource.AddFile("sound/speach/imthegreatest.ogg")
-	resource.AddFile("sound/speach/lesstalkmoreraid.ogg")
-	resource.AddFile("sound/speach/killthemall.ogg")
-	resource.AddFile("sound/speach/laff5.ogg")
-	resource.AddFile("sound/speach/laff4.ogg")
-	resource.AddFile("sound/speach/laff3.ogg")
-	resource.AddFile("sound/speach/laff2.ogg")
-	resource.AddFile("sound/speach/laff1.ogg")
-	resource.AddFile("sound/speach/lag2.ogg")
-	resource.AddFile("sound/speach/luigiimhome.ogg")
-	resource.AddFile("sound/speach/male_farquadd.ogg")
-	resource.AddFile("sound/speach/noidontwantthat.ogg")
-	resource.AddFile("sound/speach/obeyyourthirst2.ogg")
-	resource.AddFile("sound/speach/obeyyourthirstsync.ogg")
-	resource.AddFile("sound/speach/oldesttrickinthebook.ogg")
-	resource.AddFile("sound/speach/taunt_04.ogg")
-	resource.AddFile("sound/speach/thanksgivingblowout.ogg")
-	resource.AddFile("sound/speach/sanic4.ogg")
-	resource.AddFile("sound/speach/sanic3.ogg")
-	resource.AddFile("sound/speach/sanic2.ogg")
-	resource.AddFile("sound/speach/sanic1.ogg")
-	resource.AddFile("sound/speach/shazbot.ogg")
-	resource.AddFile("sound/speach/smokedyourbutt.ogg")
-	resource.AddFile("sound/speach/wttsuom.ogg")
-	resource.AddFile("sound/speach/youbastards.ogg")
-	resource.AddFile("sound/speach/youbrokemygrill.ogg")
 
 	resource.AddFile("sound/noxiousnet/clownstep1.ogg")
 	resource.AddFile("sound/noxiousnet/clownstep2.ogg")
@@ -629,13 +584,6 @@ hook.Add("Initialize", "NDBInitialize", function()
 	end
 	for _, filename in pairs(file.Find("materials/models/player/snow_man_pm/*.vtf", "GAME")) do
 		resource.AddSingleFile("materials/models/player/snow_man_pm/"..filename)
-	end
-
-	for _, filename in pairs(file.Find("materials/noxemoticons/*.vmt", "GAME")) do
-		resource.AddFile("materials/noxemoticons/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/noxemoticons/*.png", "GAME")) do
-		resource.AddFile("materials/noxemoticons/"..filename)
 	end]]
 end)
 
@@ -838,6 +786,15 @@ hook.Add("PlayerSay", "NDB.PlayerSay", function(pl, text, teamonly)
 			if text == nam then
 				blocktext = NDB.EmotesNoChat[i]
 				break
+			end
+		end
+
+		if not blocktext then
+			for trigger in pairs(NDB.DynamicEmoteSounds) do
+				if text == trigger then
+					blocktext = true
+					break
+				end
 			end
 		end
 

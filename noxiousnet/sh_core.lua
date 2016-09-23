@@ -22,6 +22,7 @@ include("addons/sh_shop.lua")
 include("addons/sh_statushook.lua")
 include("addons/sh_votemap.lua")
 include("addons/sh_expressions.lua")
+include("addons/sh_dynsnd.lua")
 
 function AccountID(str)
 	return string.sub(str, 11)

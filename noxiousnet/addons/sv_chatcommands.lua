@@ -214,7 +214,7 @@ local function CC_Admin(sender, text)
 		end
 	end
 
-	http.Post("http://mumble.noxiousnet.com:9001/gmadmin", {secret = "gogetyourtoy", steamid = sender:SteamID(), name = sender:Name(), message = text})
+	http.Post("http://mumble.noxiousnet.com:9002/gmadmin", {secret = "gogetyourtoy", steamid = sender:SteamID(), name = sender:Name(), message = text})
 
 	return ""
 end

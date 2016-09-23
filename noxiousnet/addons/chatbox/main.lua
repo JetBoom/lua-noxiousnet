@@ -649,86 +649,119 @@ function NNChat.FullChatText(entid, name, text, filter, teamonly, channel)
 				or gamemode.Call("PlayerCantUseEmotes", ent) or gamemode.Call("PlayerCantVoiceEmote", ent)
 
 				local emotetext = GAMEMODE.GetEmoteSay and GAMEMODE:GetEmoteSay(defaulttext) or defaulttext
-				for i, nam in pairs(NDB.EmotesNames) do
-					if emotetext == nam then
-						if emotenotallowed then
-							blocktext = NDB.EmotesNoChat[i]
-						else
-							local snds = NDB.EmotesSounds[i]
-							if snds then
-								if snds == ent.LastEmote and CurTime() < nextemote + 3 and not ent:IsSuperAdmin() then
-									blocktext = true
-									break
-								end
 
-								local snd
+				local playeddyn = false
+				for trigger, filename in next, NDB.DynamicEmoteSounds do
+					if emotetext ~= trigger then continue end
 
-								if type(snds) == "string" then
-									snd = snds
-								else
-									snd = snds[math.random(#snds)]
-								end
+					if emotenotallowed then
+						blocktext = true
+						break
+					end
 
-								local mdlname = string.lower(ent:GetModel())
-								for _, str in pairs(CHAT_FEMALE_MODEL_SUBSTRINGS) do
-									if string.match(mdlname, str) then
-										local femsnd = string.gsub(snd, "/male", "/female")
-										if SoundDuration(femsnd) > 0 then
-											snd = femsnd
-										end
+					if trigger == ent.LastEmote and CurTime() < nextemote + 3 and not ent:IsSuperAdmin() then
+						blocktext = true
+						break
+					end
+
+					local pitch = ent.VoicePitch or 100
+					pitch = gamemode.Call("PlayerVoicePitch", ent, pitch) or pitch
+					if pitch ~= 100 then
+						pitch = pitch + ent:UserID() % 8 - 4 -- Slight variable pitch for each player.
+					end
+					pitch = math.Clamp(pitch, 10, 255)
+
+					ent.NextEmote = CurTime() + 7
+					ent.LastEmote = trigger
+					NDB.PlayDynSound(filename, ent, pitch / 100)
+					blocktext = true
+					playeddyn = true
+
+					break
+				end
+
+				if not playeddyn then
+					for i, nam in pairs(NDB.EmotesNames) do
+						if emotetext == nam then
+							if emotenotallowed then
+								blocktext = NDB.EmotesNoChat[i]
+							else
+								local snds = NDB.EmotesSounds[i]
+								if snds then
+									if snds == ent.LastEmote and CurTime() < nextemote + 3 and not ent:IsSuperAdmin() then
+										blocktext = true
 										break
 									end
-								end
 
-								snd = gamemode.Call("PlayerVoiceEmote", ent, snd) or snd
+									local snd
 
-								local pitch = ent.VoicePitch or 100
-								pitch = gamemode.Call("PlayerVoicePitch", ent, pitch) or pitch
-								if pitch ~= 100 then
-									pitch = pitch + ent:UserID() % 8 - 4 -- Slight variable pitch for each player.
-								end
-								pitch = math.Clamp(pitch, 10, 255)
-
-								local length = SoundDuration(snd)
-								if ent:HasCostume("voicechanger") and file.Exists("sound/"..snd, "GAME") then
-									if ent.VoiceSound then
-										ent.VoiceSound:Stop()
-										ent.VoiceSound = nil
+									if type(snds) == "string" then
+										snd = snds
+									else
+										snd = snds[math.random(#snds)]
 									end
 
-									local volume = 0.7 * (NDB.EmotesVolumes[i] or 1)
-									ent.VoiceSound = CreateSound(ent, snd)
-									ent.VoiceSound:PlayEx(volume, pitch)
-									ent.VoiceSoundKillTime = CurTime() + length
-									local timername = ent:EntIndex().."VoiceDistort"
-									timer.Create(timername, 0, 0, function()
-										if not ent.VoiceSound then
-											timer.Remove(timername)
-										elseif CurTime() >= ent.VoiceSoundKillTime then
+									local mdlname = string.lower(ent:GetModel())
+									for _, str in pairs(CHAT_FEMALE_MODEL_SUBSTRINGS) do
+										if string.match(mdlname, str) then
+											local femsnd = string.gsub(snd, "/male", "/female")
+											if SoundDuration(femsnd) > 0 then
+												snd = femsnd
+											end
+											break
+										end
+									end
+
+									snd = gamemode.Call("PlayerVoiceEmote", ent, snd) or snd
+
+									local pitch = ent.VoicePitch or 100
+									pitch = gamemode.Call("PlayerVoicePitch", ent, pitch) or pitch
+									if pitch ~= 100 then
+										pitch = pitch + ent:UserID() % 8 - 4 -- Slight variable pitch for each player.
+									end
+									pitch = math.Clamp(pitch, 10, 255)
+
+									local length = SoundDuration(snd)
+									if ent:HasCostume("voicechanger") and file.Exists("sound/"..snd, "GAME") then
+										if ent.VoiceSound then
 											ent.VoiceSound:Stop()
 											ent.VoiceSound = nil
-											timer.Remove(timername)
-										else
-											ent.VoiceSound:PlayEx(volume, math.Clamp(pitch + math.sin(RealTime() * 5) * 60, 10, 255))
 										end
-									end)
-								else
-									ent:EmitSound(snd, 70, pitch, NDB.EmotesVolumes[i])
-									length = length + length * (100 - pitch) * 0.005
+
+										local volume = 0.7 * (NDB.EmotesVolumes[i] or 1)
+										ent.VoiceSound = CreateSound(ent, snd)
+										ent.VoiceSound:PlayEx(volume, pitch)
+										ent.VoiceSoundKillTime = CurTime() + length
+										local timername = ent:EntIndex().."VoiceDistort"
+										timer.Create(timername, 0, 0, function()
+											if not ent.VoiceSound then
+												timer.Remove(timername)
+											elseif CurTime() >= ent.VoiceSoundKillTime then
+												ent.VoiceSound:Stop()
+												ent.VoiceSound = nil
+												timer.Remove(timername)
+											else
+												ent.VoiceSound:PlayEx(volume, math.Clamp(pitch + math.sin(RealTime() * 5) * 60, 10, 255))
+											end
+										end)
+									else
+										ent:EmitSound(snd, 70, pitch, NDB.EmotesVolumes[i])
+										length = length + length * (100 - pitch) * 0.005
+									end
+									ent.NextEmote = CurTime() + length + 3
+
+									ent.LastEmote = snds
 								end
-								ent.NextEmote = CurTime() + length + 3
 
-								ent.LastEmote = snds
+								blocktext = NDB.EmotesNoChat[i]
+
+								if NDB.EmotesCallbacks[i] then
+									NDB.EmotesCallbacks[i](ent, i, snds)
+								end
 							end
 
-							blocktext = NDB.EmotesNoChat[i]
-
-							if NDB.EmotesCallbacks[i] then
-								NDB.EmotesCallbacks[i](ent, i, snds)
-							end
+							break
 						end
-
-						break
 					end
 				end
 

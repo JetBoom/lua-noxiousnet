@@ -17,6 +17,7 @@ include("addons/cl_song.lua")
 include("addons/cl_titlechange.lua")
 include("addons/cl_votemap.lua")
 include("addons/cl_retardchecker.lua")
+include("addons/cl_dynsnd.lua")
 include("addons/placebo/client.lua")
 
 include("addons/vgui/dexhtml.lua")
@@ -49,16 +50,6 @@ end)
 
 hook.Add("HookGetLocal", "NDB.HookGetLocal", function()
 	MySelf.Silver = MySelf.Silver or 0
-
-	--[[if GetConVarNumber("mat_queue_mode") ~= 0 then
-		RunConsoleCommand("mat_queue_mode", "0")
-		MsgN("Multi-core rendering detected. This makes the game extremely unstable. Disabling for you.")
-
-		if tonumber(file.Read("queuemodechange.txt", "DATA") or 0) + 600 <= os.time() then
-			file.Write("queuemodechange.txt", os.time())
-			RunConsoleCommand("retry")
-		end
-	end]]
 end)
 
 CreateClientConVar("nox_ballpit", 0, true, true)
