@@ -89,7 +89,6 @@ AddParser("avatar")
 
 AddParser("news")
 AddParser("forum")
-AddParser("wiki")
 AddParser("f1")
 AddAlias("help", "<help>", "<help>", "f1")
 AddParser("f2")

@@ -217,6 +217,34 @@ function meta:InitDB()
 		),
 		InitQuery, self
 	)
+	--[[mysql_query(
+		string.format(
+			"UPDATE noxplayers SET LastOnline = %d WHERE SteamID = %q LIMIT 1",
+			os.time(),
+			self:SteamID()
+		)
+	)]]
+end
+
+local function PendingBuyQuery(query, results, pl)
+	if not IsValid(pl) or #results == 0 then return end
+
+	for _, result in pairs(results) do
+		if result.Type == 0 then
+			pl:AddSilver(result.Amount, true)
+		elseif result.Type == 1 then
+			pl:SetTitleChangeCards(pl:GetTitleChangeCards() + result.Amount)
+		end
+	end
+
+	mysql_query(
+		string.format(
+			"DELETE FROM pendingbuy WHERE SteamID = %q LIMIT 100",
+			pl:SteamID()
+		)
+	)
+
+	pl:UpdateDB()
 end
 
 function meta:PostDBInit()
@@ -235,7 +263,7 @@ function meta:PostDBInit()
 			end
 			if self:GetMemberLevel() == MEMBER_NONE then
 				self:SetMemberLevel(MEMBER_ELDER)
-				self:PrintMessage(HUD_PRINTTALK, "<silkicon icon=emoticon_smile> <flash color=200,200,200 rate=6>You have been made an Elder Member for being a very frequent selfayer!</flash>")
+				self:PrintMessage(HUD_PRINTTALK, "<silkicon icon=emoticon_smile> <flash color=200,200,200 rate=6>You have been made an Elder Member for being a very frequent player!</flash>")
 			end
 		end
 	end
@@ -244,6 +272,14 @@ function meta:PostDBInit()
 	if self.VoicePitch and self:GetMemberLevel() ~= MEMBER_DIAMOND then
 		self:SetPKV("VoicePitch", nil)
 	end
+
+	mysql_query(
+		string.format(
+			"SELECT Type, Amount FROM pendingbuy WHERE SteamID = %q",
+			self:SteamID()
+		),
+		PendingBuyQuery, self
+	)
 
 	hook.Call("PostDBInit", GAMEMODE, self)
 end

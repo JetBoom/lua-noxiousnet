@@ -67,6 +67,7 @@ include("addons/promotion_codes.lua")
 --include("addons/promotion_forums.lua")
 include("addons/promotion_tribes.lua")
 include("addons/promotion_truepatriot.lua")
+include("addons/promotion_eft1.lua")
 
 if not gmod.BroadcastLua then
 	function gmod.BroadcastLua(lua)
@@ -454,137 +455,7 @@ hook.Add("Initialize", "NDBInitialize", function()
 	file.CreateDir("prevdonations")
 	file.CreateDir("retardchecker")
 
-	resource.AddWorkshop("187693631") -- Static content pack (files below)
-	--resource.AddWorkshop("237618708") -- Dynamic content pack (emotes)
-
-	--[[resource.AddFile("materials/noxctf/sprite_flame.vmt")
-
-	resource.AddFile("sound/noxiousnet/clownstep1.ogg")
-	resource.AddFile("sound/noxiousnet/clownstep2.ogg")
-
-	resource.AddFile("sound/synth/square.wav")
-	resource.AddFile("sound/synth/saw.wav")
-	resource.AddFile("sound/synth/sine.wav")
-
-	resource.AddFile("models/Aviator/aviator.mdl")
-	resource.AddFile("materials/Aviator/Aviator.vmt")
-	resource.AddFile("materials/Aviator/Aviator_envmap.vtf")
-
-	-- Plain hat
-	resource.AddFile("models/viroshat/viroshat.mdl")
-	resource.AddFile("materials/models/viroshat/viroshat.vmt")
-	resource.AddFile("materials/viroshat.vtf")
-
-	-- Witch hat
-	resource.AddFile("models/hatt.mdl")
-	resource.AddFile("materials/models/kassii/hatt.vmt")
-	resource.AddFile("materials/models/kassii/hatt_normal.vtf")
-
-	-- Gurren Lagann glasses
-	resource.AddFile("models/Items/glasses/simon_glasses.mdl")
-	resource.AddFile("models/Items/glasses/kamina_glasses.mdl")
-	resource.AddFile("materials/models/items/glasses/glass_sheet.vmt")
-	resource.AddFile("materials/models/items/glasses/glass_sheet2.vmt")
-
-	-- Creeper player model
-	resource.AddFile("models/jessev92/player/misc/creepr.mdl")
-	for _, filename in pairs(file.Find("materials/jessev92/dean/creepr/*.vtf", "MOD")) do
-		resource.AddSingleFile("materials/jessev92/dean/creepr/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/jessev92/dean/creepr/*.vmt", "MOD")) do
-		resource.AddSingleFile("materials/jessev92/dean/creepr/"..filename)
-	end
-
-	-- Bin Laden player model
-	resource.AddSingleFile("models/jessev92/player/misc/osamabl1.mdl")
-	resource.AddSingleFile("models/jessev92/player/misc/osamabl1.vvd")
-	resource.AddSingleFile("models/jessev92/player/misc/OsamaBL1.phy")
-	resource.AddSingleFile("models/jessev92/player/misc/OsamaBL1.dx80.vtx")
-	resource.AddSingleFile("models/jessev92/player/misc/OsamaBL1.dx90.vtx")
-	resource.AddSingleFile("models/jessev92/player/misc/OsamaBL1.sw.vtx")
-	resource.AddSingleFile("models/jessev92/player/misc/OsamaBL1.xbox.vtx")
-	for _, filename in pairs(file.Find("materials/jessev92/player/common/*.vtf", "MOD")) do
-		resource.AddSingleFile("materials/jessev92/player/common/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/jessev92/player/common/*.vmt", "MOD")) do
-		resource.AddSingleFile("materials/jessev92/player/common/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/jessev92/player/misc/osama/*.vmt", "MOD")) do
-		resource.AddSingleFile("materials/jessev92/player/misc/osama/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/jessev92/player/misc/osama/*.vtf", "MOD")) do
-		resource.AddSingleFile("materials/jessev92/player/misc/osama/"..filename)
-	end
-
-	-- Black*Rock Shooter player model
-	resource.AddSingleFile("models/player/BRSP.dx80.vtx")
-	resource.AddSingleFile("models/player/BRSP.dx90.vtx")
-	resource.AddSingleFile("models/player/BRSP.phy")
-	resource.AddSingleFile("models/player/BRSP.sw.vtx")
-	resource.AddSingleFile("models/player/brsp.vvd")
-	resource.AddSingleFile("models/player/brsp.mdl")
-	for _, filename in pairs(file.Find("materials/BlackRockShooter/*.vtf", "MOD")) do
-		resource.AddSingleFile("materials/BlackRockShooter/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/BlackRockShooter/*.vmt", "MOD")) do
-		resource.AddSingleFile("materials/BlackRockShooter/"..filename)
-	end
-
-	-- Danboard player model
-	resource.AddFile("models/player/danboard.mdl")
-	resource.AddSingleFile("materials/models/player/danboard_arm_leg_sheet.vmt")
-	resource.AddSingleFile("materials/models/player/danboard_arm_leg_sheet.vtf")
-	resource.AddSingleFile("materials/models/player/danboard_body_sheet.vmt")
-	resource.AddSingleFile("materials/models/player/danboard_body_sheet.vtf")
-	resource.AddSingleFile("materials/models/player/danboard_head_sheet.vmt")
-	resource.AddSingleFile("materials/models/player/danboard_head_sheet.vtf")
-
-	-- Grim player model
-	resource.AddFile("models/grim.mdl")
-	for _, filename in pairs(file.Find("materials/models/grim/*.vtf", "MOD")) do
-		resource.AddSingleFile("materials/models/grim/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/models/grim/*.vmt", "MOD")) do
-		resource.AddSingleFile("materials/models/grim/"..filename)
-	end
-
-	-- Moe GlaDOS player model
-	resource.AddSingleFile("models/player/Moe_Glados_p.dx80.vtx")
-	resource.AddSingleFile("models/player/Moe_Glados_p.dx90.vtx")
-	resource.AddSingleFile("models/player/Moe_Glados_p.phy")
-	resource.AddSingleFile("models/player/Moe_Glados_p.sw.vtx")
-	resource.AddSingleFile("models/player/moe_glados_p.vvd")
-	resource.AddSingleFile("models/player/moe_glados_p.mdl")
-	for _, filename in pairs(file.Find("materials/Glados_xeno/*.vmt", "MOD")) do
-		resource.AddSingleFile("materials/Glados_xeno/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/Glados_xeno/*.vtf", "MOD")) do
-		resource.AddSingleFile("materials/Glados_xeno/"..filename)
-	end
-
-	-- GabeN player model
-	resource.AddSingleFile("Models/Jason278-Players/Gabe_3.dx80.vtx")
-	resource.AddSingleFile("Models/Jason278-Players/Gabe_3.dx90.vtx")
-	resource.AddSingleFile("Models/Jason278-Players/Gabe_3.sw.vtx")
-	resource.AddSingleFile("Models/Jason278-Players/Gabe_3.xbox.vtx")
-	resource.AddSingleFile("Models/Jason278-Players/Gabe_3.phy")
-	resource.AddSingleFile("Models/Jason278-Players/gabe_3.vvd")
-	resource.AddSingleFile("Models/Jason278-Players/gabe_3.mdl")
-	for _, filename in pairs(file.Find("materials/models/player/ssgabe/*.vmt", "MOD")) do
-		resource.AddSingleFile("materials/models/player/ssgabe/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/models/player/ssgabe/*.vtf", "MOD")) do
-		resource.AddSingleFile("materials/models/player/ssgabe/"..filename)
-	end
-
-	-- Snowman player model
-	resource.AddFile("models/player/snow_man_pm/snow_man_pm.mdl")
-	for _, filename in pairs(file.Find("materials/models/player/snow_man_pm/*.vmt", "GAME")) do
-		resource.AddSingleFile("materials/models/player/snow_man_pm/"..filename)
-	end
-	for _, filename in pairs(file.Find("materials/models/player/snow_man_pm/*.vtf", "GAME")) do
-		resource.AddSingleFile("materials/models/player/snow_man_pm/"..filename)
-	end]]
+	resource.AddWorkshop("187693631") -- Static content pack
 end)
 
 hook.Add("PlayerCanHearPlayersVoice", "NDB_MutedVoice", function(listener, talker)

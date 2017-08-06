@@ -224,18 +224,13 @@ function NDB.AddPunishment(plorsteamidoruserid, punishment, duration, reason, ad
 	reason = reason or "No reason."
 	admin = admin or "Remote"
 
-	if punishment == PUNISHMENT_BAN and duration > 172800 then
+	--[[if punishment == PUNISHMENT_BAN and duration > 172800 then
 		if plvalid then
 			if NDB.MemberBanProtection[pl:GetMemberLevel()] then
 				duration = 172800
 			end
-		--[[else
-			local filename = AccountFile(AccountID(steamid))
-			if file.Exists(filename, "DATA") and NDB.MemberBanProtection[tonumber(Deserialize(file.Read(filename, "DATA")).MemberLevel) or 0] then
-				duration = 172800
-			end]]
 		end
-	end
+	end]]
 
 	local tab
 	for _, t in pairs(NDB.Punishments) do

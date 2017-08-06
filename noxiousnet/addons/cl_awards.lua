@@ -244,7 +244,7 @@ local function CreateRealProfile(player, contents)
 	local htmlpan = vgui.Create("DHTML", frame)
 	htmlpan:SetSize(wid - 8, hei - 342)
 	htmlpan:SetPos(4, 88)
-	htmlpan:OpenURL("https://noxiousnet.com/player?id="..player:SteamID().."&noheader=1&noname=1")
+	htmlpan:OpenURL("https://noxiousnet.com/player/"..player:SteamID().."?noheader=1&noname=1")
 
 	NDB.CreateAwardsPanel(nil, wid - 8, 246, frame, contents.Awards or {}):SetPos(4, hei - 250)
 

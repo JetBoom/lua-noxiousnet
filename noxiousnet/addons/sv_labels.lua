@@ -7,7 +7,7 @@ hook.Add("PlayerDisconnected", "Labels.PlayerDisconnected", function(pl)
 	end
 end)
 
-local forbidden = {"<sound", "<model", "<wiki", "<f1>", "<f2>", "<f3>", "<f4>", "<news>", "<spoiler>", "<help>"}
+local forbidden = {"<sound", "<model", "<f1>", "<f2>", "<f3>", "<f4>", "<news>", "<spoiler>", "<help>"}
 timer.SimpleEx(0, function()
 	NDB.AddChatCommand("/label", function(sender, text)
 		if not sender:IsValid() or not sender:Alive() or sender:IsMuted() or not text then return "" end
@@ -52,7 +52,7 @@ timer.SimpleEx(0, function()
 				mine[#mine + 1] = ent
 			end
 		end
-	
+
 		if count >= maxlabels then
 			for i=0, count - maxlabels do
 				mine[i + 1]:Remove()

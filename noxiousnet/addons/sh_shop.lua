@@ -87,7 +87,7 @@ ShopItem("Aviator Glasses", 21, 40000, CAT_FACE, "aviators", "These glasses let 
 ShopItem("Witch's Hat", 27, 20000, CAT_HEAD, "witchhat", "A must have for any aspiring witch or warlock.")
 s = ShopItem("Headcrab Hat", 23, 60000, CAT_HEAD, "headcrab", "Lamarr! There you are!")
 s.Awards = {"Marauder_of_Humans", "ZS_Zombie_Silver"}
-ShopItem("Monitor Head", 28, nil, CAT_HEAD, "monitorhead", "A prize for active forum posters.", "Requires you to have a 90 day old forum account with at least 30 posts.", function(pl) return pl:HasFlag("forumspromotion") end)
+ShopItem("Monitor Head", 28, nil, CAT_HEAD, "monitorhead", "A prize for old forum posters.", "This item can no longer be obtained.", function(pl) return pl:HasFlag("forumspromotion") end)
 
 ShopItem("Fedora", 24, 20000, CAT_HEAD, "fedora", "It's like I'm really a detective from one of those noir films and not a hipster.")
 ShopItem("Afro", 22, 60000, CAT_HEAD, "afro", "People won't even be able to see past your hair.")
@@ -167,7 +167,7 @@ ShopItem("Saxton Mask", 75, 100000, CAT_HEAD, "saxtonmask")
 ShopItem("Black*Rock Shooter", 76, 1500000, CAT_MODEL, "blackrockshooter", "Enables use of the Black*Rock Shooter model.").Model = "models/player/brsp.mdl"
 ShopItem("Moe GlaDOS", 77, 1500000, CAT_MODEL, "moeglados", "Enables use of the Moe GlaDOS model.").Model = "models/player/moe_glados_p.mdl"
 
--- Holiday 2014
+-- Holiday
 --ShopItem("Snow Man", 78, 25000, CAT_MODEL, "snowman", "Enables use of the Snow Man model.").Model = "models/player/snow_man_pm/snow_man_pm.mdl"
 ShopItem("Snow Man", 78, 1500000, CAT_MODEL, "snowman", "Enables use of the Snow Man model.").Model = "models/player/snow_man_pm/snow_man_pm.mdl"
 
@@ -176,6 +176,11 @@ ShopItem("Grim", 80, 1500000, CAT_MODEL, "grim", "Enables use of the Grim model.
 ShopItem("GabeN", 81, 1500000, CAT_MODEL, "gaben", "Enables use of the GabeN model.").Model = "Models/Jason278-Players/gabe_3.mdl"
 ShopItem("Creeper", 82, 1500000, CAT_MODEL, "creeper", "Enables use of the Creeper model.").Model = "models/jessev92/player/misc/creepr.mdl"
 ShopItem("Bin Laden", 83, 1500000, CAT_MODEL, "binladen", "Enables use of the Bin Laden model.").Model = "models/jessev92/player/misc/osamabl1.mdl"
+
+--[[ShopItem("Trump", 369, 5000000, CAT_MODEL, "trump", "I'm really rich.").Model = "models/omgwtfbbq/the_ship/characters/trump_playermodel.mdl"
+ShopItem("Kim Jong Un", 370, nil, CAT_MODEL, "kimjongun", "Enables use of the Great Leader.", "A limited promotional item. Knock out 3 people in a single game of EFT with tomahawk missiles. Must have at least 8 people playing.").Model = "models/player/hhp227/kim_jong_un.mdl"
+ShopItem("Obama", 371, nil, CAT_MODEL, "obama", "Enables use of the Obama model.", "A limited promotional item. Score 2 touchdowns in a single game of EFT. Must have at least 8 people playing.").Model = "models/obama/obama.mdl"
+ShopItem("Senator Armstrong", 372, nil, CAT_MODEL, "armstrong", "THIS AIN'T NO COLLEGE BALL", "A limited promotional item. Score 4 touchdowns in a single game of EFT. Must have at least 8 people playing.").Model = "models/player/alyx.mdl"]]
 
 if SERVER then
 	player_manager.AddValidModel("blackrockshooter", "models/player/brsp.mdl")
@@ -186,6 +191,10 @@ if SERVER then
 	player_manager.AddValidModel("gaben", "Models/Jason278-Players/gabe_3.mdl")
 	player_manager.AddValidModel("creeper", "models/jessev92/player/misc/creepr.mdl")
 	player_manager.AddValidModel("binladen", "models/jessev92/player/misc/osamabl1.mdl")
+	--[[player_manager.AddValidModel("trump", "models/omgwtfbbq/the_ship/characters/trump_playermodel.mdl")
+	player_manager.AddValidModel("kimjongun", "models/player/hhp227/kim_jong_un.mdl")
+	player_manager.AddValidModel("obama", "models/obama/obama.mdl")
+	player_manager.AddValidModel("armstrong", "models/player/alyx.mdl")]]
 end
 
 
