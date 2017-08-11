@@ -652,27 +652,23 @@ function NNChat.FullChatText(entid, name, text, filter, teamonly, channel)
 
 				local playeddyn = false
 
-				if emotenotallowed then
-					blocktext = true
-				else
-					local filename = NDB.DynamicEmoteSounds[emotetext]
-					if filename then
-						if trigger == ent.LastEmote and CurTime() < nextemote + 3 and not ent:IsAdmin() then
-							blocktext = true
-						else
-							local pitch = ent.VoicePitch or 100
-							pitch = gamemode.Call("PlayerVoicePitch", ent, pitch) or pitch
-							if pitch ~= 100 then
-								pitch = pitch + ent:UserID() % 8 - 4 -- Slight variable pitch for each player.
-							end
-							pitch = math.Clamp(pitch, 10, 255)
-
-							ent.NextEmote = CurTime() + 7
-							ent.LastEmote = emotetext
-							NDB.PlayDynSound(filename, ent, pitch / 100, ent:HasCostume("voicechanger"))
-							blocktext = true
-							playeddyn = true
+				local filename = NDB.DynamicEmoteSounds[emotetext]
+				if filename then
+					if emotenotallowed or trigger == ent.LastEmote and CurTime() < nextemote + 3 and not ent:IsAdmin() then
+						blocktext = true
+					else
+						local pitch = ent.VoicePitch or 100
+						pitch = gamemode.Call("PlayerVoicePitch", ent, pitch) or pitch
+						if pitch ~= 100 then
+							pitch = pitch + ent:UserID() % 8 - 4 -- Slight variable pitch for each player.
 						end
+						pitch = math.Clamp(pitch, 10, 255)
+
+						ent.NextEmote = CurTime() + 7
+						ent.LastEmote = emotetext
+						NDB.PlayDynSound(filename, ent, pitch / 100, ent:HasCostume("voicechanger"))
+						blocktext = true
+						playeddyn = true
 					end
 				end
 
