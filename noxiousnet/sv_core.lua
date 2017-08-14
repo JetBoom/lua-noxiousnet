@@ -357,7 +357,8 @@ hook.Add("PlayerInitialSpawn", "NDB.PlayerInitialSpawn", function(pl)
 
 	pl:InitDB()
 
-	NDB.LogLine("<Player Initial Spawned> - "..pl:SteamID().." "..pl:Name().." | "..pl:IPUID())
+	--NDB.LogLine("<Player Initial Spawned> - "..pl:SteamID().." "..pl:Name().." | "..pl:IPUID())
+	NDB.LogLine("<Player Initial Spawned> - "..pl:SteamID().." "..pl:Name())
 end)
 
 function NDB.GlobalSave()
@@ -606,7 +607,8 @@ end)
 
 hook.Add("PlayerDisconnected", "NDB.PlayerDisconnected", function(pl)
 	if pl:IsValid() then
-		NDB.LogLine("<Player Disconnected> - "..pl:SteamID().." "..pl:Name().." | IPUID: "..pl:IPUID())
+		--NDB.LogLine("<Player Disconnected> - "..pl:SteamID().." "..pl:Name().." | IPUID: "..pl:IPUID())
+		NDB.LogLine("<Player Disconnected> - "..pl:SteamID().." "..pl:Name())
 
 		pl:UpdateDB()
 	end
@@ -636,15 +638,7 @@ hook.Add("PlayerSay", "NDB.PlayerSay", function(pl, text, teamonly)
 
 	for _, muteword in pairs(NDB.MuteWords) do
 		if string.find(textlower, muteword, 1, true) then
-			--[[if pl.WarnedAboutStupidPhrases then
-				NDB.AddPunishment(pl, PUNISHMENT_MUTE, 1440, "Said something stupid TWICE!", "Schenck and company")
-			else
-				pl.WarnedAboutStupidPhrases = true
-				pl:PrintMessage(HUD_PRINTTALK, "<silkicon icon=world> <red>Either stop saying stupid things (</red>"..muteword.."<red>) or get muted.</red>")
-			end]]
-
 			pl:PrintMessage(HUD_PRINTTALK, "<silkicon icon=world> <red>Don't say stupid things (</red>"..muteword.."<red>). Trying to get around this will get you muted.</red>")
-
 			return ""
 		end
 	end
@@ -740,7 +734,8 @@ hook.Add("PlayerPasswordAuth", "NDB.PlayerPasswordAuth", function(name, pass, st
 		)
 	end
 
-	NDB.LogLine("<Player Connected> "..name.." | "..steamid.." | IPUID: "..IPUID(ipaddress))
+	--NDB.LogLine("<Player Connected> "..name.." | "..steamid.." | IPUID: "..IPUID(ipaddress))
+	NDB.LogLine("<Player Connected> "..name.." | "..steamid)
 end)
 
 net.Receive("nox_requestaccount", function(length, sender)
