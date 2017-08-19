@@ -162,7 +162,7 @@ hook.Add("Initialize", "ndb_votemap_sv_initialize", function()
 				for k, v in pairs(VoteMap.GetMapList()) do
 					local lowermapname = string.lower(v[1])
 
-					if currentmap ~= lowermapname and not VoteMap.DisabledMaps[lowermapname] and not VoteMap.IsMapLocked(k) then
+					if currentmap ~= lowermapname and not VoteMap.DisabledMaps[lowermapname] and VoteMap.GetMapLockState(k) == 0 --[[not VoteMap.IsMapLocked(k)]] then
 						table.insert(maplist, k)
 					end
 				end
