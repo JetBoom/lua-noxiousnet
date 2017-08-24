@@ -59,6 +59,7 @@ BoneTranslates["models/jessev92/player/misc/creepr.mdl"] = {["ValveBiped.Bip01_H
 BoneTranslates["models/jason278-players/gabe_3.mdl"] = {["ValveBiped.Bip01_Head1"] = {"ValveBiped.Bip01_Head1", Vector(2, 1, 0), Angle(0, 0, 0)}}
 BoneTranslates["models/zombie/classic.mdl"] = {["ValveBiped.Bip01_Head1"] = {"ValveBiped.HC_Body_Bone", Vector(-2, 5.5, 0), Angle(180, -45, 160)}}
 BoneTranslates["models/player/zombie_classic.mdl"] = BoneTranslates["models/zombie/classic.mdl"]
+BoneTranslates["models/player/zombie_classic_hbfix.mdl"] = BoneTranslates["models/zombie/classic.mdl"]
 BoneTranslates["models/zombie/poison.mdl"] = {["ValveBiped.Bip01_Head1"] = {"ValveBiped.Bip01_Spine4", Vector(4, 0, -1), Angle(-90, 0, -90)}}
 BoneTranslates["models/zombie/fast.mdl"] = {["ValveBiped.Bip01_Head1"] = {"ValveBiped.HC_BodyCube", Vector(-3, -1, -4), Angle(90, 0, 0)}}
 BoneTranslates["models/player/classic.mdl"] = {["ValveBiped.Bip01_Head1"] = {"ValveBiped.Bip01_Head1", Vector(-3, -2, 0), Angle(0, 60, 0)}}
