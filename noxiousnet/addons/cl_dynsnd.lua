@@ -19,14 +19,17 @@ local snd_uid = 0
 hook.Add("Think", "dynsoundparent", function()
 	for uid, snd in pairs(Playing) do
 		if snd.channel:IsValid() then
+			if snd.channel:GetState() == GMOD_CHANNEL_STOPPED or (snd_mute_losefocus:GetBool() and not system_HasFocus()) then
+				snd.channel:Stop()
+				return
+			end
+			
+			if snd.parent and snd.parent:IsValid() then
+				snd.channel:SetPos(snd.parent:EyePos())
+			end
+			
 			if snd.distort then
 				snd.channel:SetPlaybackRate(snd.pitch * (1 + math.sin((uid + RealTime()) * 5) * 0.4))
-			end
-
-			if snd_mute_losefocus:GetBool() and not system_HasFocus() then
-				snd.channel:Stop()
-			elseif snd.parent and snd.parent:IsValid() then
-				snd.channel:SetPos(snd.parent:EyePos())
 			end
 		else
 			Playing[uid] = nil
