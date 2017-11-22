@@ -177,26 +177,55 @@ ShopItem("GabeN", 81, 1500000, CAT_MODEL, "gaben", "Enables use of the GabeN mod
 ShopItem("Creeper", 82, 1500000, CAT_MODEL, "creeper", "Enables use of the Creeper model.").Model = "models/jessev92/player/misc/creepr.mdl"
 ShopItem("Bin Laden", 83, 1500000, CAT_MODEL, "binladen", "Enables use of the Bin Laden model.").Model = "models/jessev92/player/misc/osamabl1.mdl"
 
---[[ShopItem("Trump", 369, 5000000, CAT_MODEL, "trump", "I'm really rich.").Model = "models/omgwtfbbq/the_ship/characters/trump_playermodel.mdl"
-ShopItem("Kim Jong Un", 370, nil, CAT_MODEL, "kimjongun", "Enables use of the Great Leader.", "A limited promotional item. Knock out 3 people in a single game of EFT with tomahawk missiles. Must have at least 8 people playing.").Model = "models/player/hhp227/kim_jong_un.mdl"
-ShopItem("Obama", 371, nil, CAT_MODEL, "obama", "Enables use of the Obama model.", "A limited promotional item. Score 2 touchdowns in a single game of EFT. Must have at least 8 people playing.").Model = "models/obama/obama.mdl"
-ShopItem("Senator Armstrong", 372, nil, CAT_MODEL, "armstrong", "THIS AIN'T NO COLLEGE BALL", "A limited promotional item. Score 4 touchdowns in a single game of EFT. Must have at least 8 people playing.").Model = "models/player/alyx.mdl"]]
+ShopItem("Kim Jong Un", 370, 1500000, CAT_MODEL, "kimjongun", "Enables use of the Great Leader.").Model = "models/player/hhp227/kim_jong_un.mdl"
+ShopItem("Obama", 371, 1500000, CAT_MODEL, "obama", "Enables use of the Obama model.").Model = "models/obama/obama.mdl"
+ShopItem("Snake Tuxedo", 372, 1500000, CAT_MODEL, "snake_tuxedo", "Enables use of the Snake Tuxedo model.").Model = "models/mgs1/snake_tuxedo.mdl"
+ShopItem("Genome Soldier", 373, 1500000, CAT_MODEL, "genome_soldier", "Enables use of the Genome Soldier model.").Model = "models/mgs1/genome_soldier.mdl"
+ShopItem("Gray Fox", 374, 1500000, CAT_MODEL, "gray_fox", "Enables use of the Gray Fox model.").Model = "models/player/slow/amberlyn/re5/cyborg/cyborg.mdl"
+ShopItem("Billy", 375, 2000000, CAT_MODEL, "billy", "Enables use of the Billy model.").Model = "models/vinrax/player/billy_herrington.mdl"
+ShopItem("Obese Male", 376, 3000000, CAT_MODEL, "obese_male", "Enables use of the Obese Male model. Changes looks on every respawn.").Model = "models/dawson/obese_male_deluxe/obese_male_deluxe.mdl"
+ShopItem("Cirno", 377, 4000000, CAT_MODEL, "cirno", "Enables use of the Cirno model.").Model = "models/player/cirno/cirno_player.mdl"
+ShopItem("Sagiri", 378, 4000000, CAT_MODEL, "sagiri", "Enables use of the Sagiri model.").Model = "models/player/dewobedil/eromanga_sensei/sagiri/pajama_p.mdl"
+ShopItem("Remilia", 379, 4000000, CAT_MODEL, "remilia", "Enables use of the Remilia model.").Model = "models/loyalists/mmd/remilia/remilia_mp_pm.mdl"
+ShopItem("Flandre", 380, 4000000, CAT_MODEL, "flandre", "Enables use of the Flandre model.").Model = "models/loyalists/mmd/flandre/flandre_mp_pm.mdl"
+ShopItem("Yuudachi", 381, 4000000, CAT_MODEL, "yuudachi", "Enables use of the Yuudachi model.").Model = "models/jazzmcfly/kantai/yuudachi/yuudachi.mdl"
+ShopItem("Haku", 382, 4000000, CAT_MODEL, "haku", "Enables use of the Haku model.").Model = "models/player/dewobedil/vocaloid/haku/bikini_p.mdl"
+ShopItem("Junko", 383, 4000000, CAT_MODEL, "junko", "Enables use of the Junko model.").Model = "models/player/dewobedil/touhou/junko/default_p.mdl"
 
-if SERVER then
-	player_manager.AddValidModel("blackrockshooter", "models/player/brsp.mdl")
-	player_manager.AddValidModel("moeglados", "models/player/moe_glados_p.mdl")
-	player_manager.AddValidModel("snowman", "models/player/snow_man_pm/snow_man_pm.mdl")
-	player_manager.AddValidModel("danboard", "models/player/danboard.mdl")
-	player_manager.AddValidModel("grim", "models/grim.mdl")
-	player_manager.AddValidModel("gaben", "Models/Jason278-Players/gabe_3.mdl")
-	player_manager.AddValidModel("creeper", "models/jessev92/player/misc/creepr.mdl")
-	player_manager.AddValidModel("binladen", "models/jessev92/player/misc/osamabl1.mdl")
-	--[[player_manager.AddValidModel("trump", "models/omgwtfbbq/the_ship/characters/trump_playermodel.mdl")
-	player_manager.AddValidModel("kimjongun", "models/player/hhp227/kim_jong_un.mdl")
-	player_manager.AddValidModel("obama", "models/obama/obama.mdl")
-	player_manager.AddValidModel("armstrong", "models/player/alyx.mdl")]]
-end
+player_manager.AddValidModel("blackrockshooter", "models/player/brsp.mdl")
+player_manager.AddValidModel("moeglados", "models/player/moe_glados_p.mdl")
+player_manager.AddValidModel("snowman", "models/player/snow_man_pm/snow_man_pm.mdl")
+player_manager.AddValidModel("danboard", "models/player/danboard.mdl")
+player_manager.AddValidModel("grim", "models/grim.mdl")
+player_manager.AddValidModel("gaben", "Models/Jason278-Players/gabe_3.mdl")
+player_manager.AddValidModel("creeper", "models/jessev92/player/misc/creepr.mdl")
+player_manager.AddValidModel("binladen", "models/jessev92/player/misc/osamabl1.mdl")
 
+player_manager.AddValidModel("kimjongun", "models/player/hhp227/kim_jong_un.mdl")
+player_manager.AddValidModel("obama", "models/obama/obama.mdl")
+player_manager.AddValidModel("snake", "models/mgs1/snake_tuxedo.mdl")
+player_manager.AddValidHands("snake", "models/weapons/c_arms_snake_tuxedo.mdl", 0, "00000000")
+player_manager.AddValidModel("genome", "models/mgs1/genome_soldier.mdl")
+player_manager.AddValidHands("genome", "models/weapons/c_arms_gns.mdl", 0, "00000000")
+player_manager.AddValidModel("grayfox", "models/Player/slow/amberlyn/re5/cyborg/cyborg.mdl")
+player_manager.AddValidHands("grayfox", "models/Player/slow/amberlyn/re5/cyborg/cyborg_arms.mdl", 0, "00000000")
+player_manager.AddValidModel("billy", "models/vinrax/player/billy_herrington.mdl")
+player_manager.AddValidModel("obese_male", "models/dawson/obese_male_deluxe/obese_male_deluxe.mdl")
+player_manager.AddValidHands("obese_male", "models/dawson/obese_male_deluxe/obese_male_deluxe_arms.mdl", 0, "00000000")
+player_manager.AddValidModel("cirno", "models/player/cirno/cirno_player.mdl")
+player_manager.AddValidHands("cirno", "models/player/cirno/c_arms_cirno.mdl", 0, "0000000")
+player_manager.AddValidModel("sagiri", "models/player/dewobedil/eromanga_sensei/sagiri/pajama_p.mdl")
+player_manager.AddValidHands("sagiri", "models/loyalists/mmd/remilia/remilia_mp_vm.mdl", 0, "0000000")
+player_manager.AddValidModel("remilia", "models/loyalists/mmd/remilia/remilia_mp_pm.mdl")
+player_manager.AddValidHands("remilia", "models/loyalists/mmd/remilia/remilia_mp_vm.mdl", 0, "0000000")
+player_manager.AddValidModel("flandre", "models/loyalists/mmd/flandre/flandre_mp_pm.mdl")
+player_manager.AddValidHands("flandre", "models/loyalists/mmd/flandre/flandre_vm_mp.mdl", 0, "0000000")
+player_manager.AddValidModel("yuudachi", "models/jazzmcfly/kantai/yuudachi/yuudachi.mdl")
+player_manager.AddValidHands("yuudachi", "models/jazzmcfly/kantai/yuudachi/c_arms/yuudachi.mdl", 0, "00000000")
+player_manager.AddValidModel("haku", "models/player/dewobedil/vocaloid/haku/bikini_p.mdl")
+player_manager.AddValidHands("haku", "models/player/dewobedil/vocaloid/haku/c_arms/bikini_p.mdl", 0, "00000000")
+player_manager.AddValidModel("junko", "models/player/dewobedil/touhou/junko/default_p.mdl")
+player_manager.AddValidHands("junko", "models/player/dewobedil/touhou/junko/c_arms/default_p.mdl", 0, "00000000")
 
 s = ShopItem("Bumper Sticker: AS:S MAN", 84, 1, CAT_BACK, "asstitle1", "For true AS:S men.")
 s.Awards = {"unstoppable"}

@@ -1,6 +1,6 @@
 local sandbox_env = {Vector = Vector, Angle = Angle}
 
-function Deserialize(sIn)
+function Deserialize(sIn, env)
 	local out = {}
 
 	if #sIn == 0 or string.sub(sIn, -1) ~= "}" then return out end
@@ -14,7 +14,7 @@ function Deserialize(sIn)
 	if type(func) == "string" then
 		print("Deserialization error: "..func)
 	else
-		setfenv(func, sandbox_env)
+		setfenv(func, env or sandbox_env)
 		out = func() or out
 	end
 

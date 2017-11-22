@@ -576,6 +576,17 @@ function meta:SetModel(mdl, override)
 	else
 		FindMetaTable("Entity").SetModel(self, mdl)
 	end
+
+	if mdl == "models/dawson/obese_male_deluxe/obese_male_deluxe.mdl" then
+		self:SetBodygroup(0, math.random(0, 1))
+		self:SetBodygroup(1, math.random(0, 1))
+		self:SetBodygroup(2, math.random(0, 5))
+		self:SetBodygroup(3, math.random(0, 2))
+		self:SetBodygroup(4, math.random(0, 2))
+		self:SetBodygroup(5, math.random(0, 1))
+		self:SetBodygroup(6, math.random(0, 4))
+		self:SetBodygroup(7, 4)
+	end
 end
 
 net.Receive("nox_voicepitch", function(length, sender)

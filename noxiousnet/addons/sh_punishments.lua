@@ -15,6 +15,8 @@ PUNISHMENT_VOICEMUTE = 14
 PUNISHMENT_ICESKATES = 15
 PUNISHMENT_SOHIGHRIGHTNOW = 16
 PUNISHMENT_NOSPRAY = 17
+PUNISHMENT_ANIMAL = 18
+PUNISHMENT_LAUGHINGSTOCK = 19
 
 NDB.Punishments = {}
 NDB.PunishmentsNames = {
@@ -34,7 +36,9 @@ NDB.PunishmentsNames = {
 	[PUNISHMENT_VOICEMUTE] = "voice mute",
 	[PUNISHMENT_ICESKATES] = "ice skates",
 	[PUNISHMENT_SOHIGHRIGHTNOW] = "so high right now",
-	[PUNISHMENT_NOSPRAY] = "no spray"
+	[PUNISHMENT_NOSPRAY] = "no spray",
+	[PUNISHMENT_ANIMAL] = "animal",
+	[PUNISHMENT_LAUGHINGSTOCK] = "laughing stock"
 }
 NDB.PunishmentsPastNames = {
 	[PUNISHMENT_BAN] = "banned",
@@ -53,7 +57,9 @@ NDB.PunishmentsPastNames = {
 	[PUNISHMENT_VOICEMUTE] = "voice muted",
 	[PUNISHMENT_ICESKATES] = "ice skated",
 	[PUNISHMENT_SOHIGHRIGHTNOW] = "made really, really high right now",
-	[PUNISHMENT_NOSPRAY] = "made unable to spray"
+	[PUNISHMENT_NOSPRAY] = "made unable to spray",
+	[PUNISHMENT_ANIMAL] = "finally turned in to an animal",
+	[PUNISHMENT_LAUGHINGSTOCK] = "made a laughing stock"
 }
 
 PUNISH_REASON_CHEATING = 1
@@ -73,6 +79,7 @@ PUNISH_REASON_VOTEABUSE = 14
 PUNISH_REASON_MASSNAILREMOVAL = 15
 PUNISH_REASON_HORRIBLESPRAY = 16
 PUNISH_REASON_CPSPRAY = 17
+PUNISH_REASON_FURRY = 18
 
 TIME_HOUR = 60
 TIME_DAY = TIME_HOUR * 24
@@ -120,12 +127,12 @@ NDB.PreMadePunishments = {
 	[PUNISH_REASON_CRASHSERVER] = {
 		"Using an exploit to crash the server on purpose",
 		PUNISHMENT_BAN,
-		{TIME_MONTH * 3, TIME_FOREVER}
+		{TIME_MONTH * 6, TIME_FOREVER}
 	},
 	[PUNISH_REASON_CRASHCLIENT] = {
 		"Using an exploit to crash clients on purpose",
 		PUNISHMENT_BAN,
-		{TIME_WEEK, TIME_MONTH, TIME_FOREVER}
+		{TIME_MONTH, TIME_FOREVER}
 	},
 	[PUNISH_REASON_DUMB] = {
 		"Too dumb for chat",
@@ -166,6 +173,11 @@ NDB.PreMadePunishments = {
 		"CP spray",
 		PUNISHMENT_NOSPRAY,
 		{TIME_FOREVER}
+	},
+	[PUNISH_REASON_FURRY] = {
+		"Furry",
+		PUNISHMENT_ANIMAL,
+		{TIME_MONTH * 3, TIME_FOREVER}
 	}
 }
 

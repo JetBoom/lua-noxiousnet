@@ -16,7 +16,18 @@ PARSER_ENCLOSE_ARGS = 3
 CHAT_DEFAULT_COLOR = Color(255, 255, 255, 255)
 CHAT_DEFAULT_SYSTEM_COLOR = Color(180, 200, 255, 255)
 
-CHAT_FEMALE_MODEL_SUBSTRINGS = {"female", "mossman", "alyx", "brsp.mdl", "moe_glados_p.mdl"}
+CHAT_FEMALE_MODEL_SUBSTRINGS = {
+	"female", "mossman", "alyx",
+	"brsp.mdl",
+	"moe_glados_p.mdl",
+	"cirno_player.mdl",
+	"pajama_p.mdl",
+	"remilia_mp_pm.mdl",
+	"flandre_mp_pm.mdl",
+	"yuudachi.mdl",
+	"bikini_p.mdl",
+	"default_p.mdl"
+}
 
 CHAT_TYPES = {
 	[CHATTYPE_SAY] = {Name = "SAY", Color = Color(255, 255, 255)},

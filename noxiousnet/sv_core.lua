@@ -460,7 +460,7 @@ hook.Add("Initialize", "NDBInitialize", function()
 end)
 
 hook.Add("PlayerCanHearPlayersVoice", "NDB_MutedVoice", function(listener, talker)
-	if talker:IsPunished(PUNISHMENT_VOICEMUTE) or talker:IsPunished(PUNISHMENT_MUTE)
+	if talker:IsPunished(PUNISHMENT_VOICEMUTE) or talker:IsPunished(PUNISHMENT_ANIMAL) or talker:IsPunished(PUNISHMENT_MUTE)
 		or not listener.Ballpit and talker:IsPunished(PUNISHMENT_BALLPIT) and not listener:IsPunished(PUNISHMENT_BALLPIT) then return false end
 
 	if listener.AllTalk or talker.AllTalk then return true end
@@ -614,6 +614,7 @@ hook.Add("PlayerDisconnected", "NDB.PlayerDisconnected", function(pl)
 	end
 end)
 
+local animal_noises = {"woof", "meow", "moo", "squack", "*growls*"}
 hook.Add("PlayerSay", "NDB.PlayerSay", function(pl, text, teamonly)
 	if not pl:IsPlayer() or not pl:IsConnected() then return "" end
 
@@ -632,6 +633,10 @@ hook.Add("PlayerSay", "NDB.PlayerSay", function(pl, text, teamonly)
 	end
 
 	if #text == 0 or pl:IsPunishedNotify(PUNISHMENT_MUTE) or pl:CheckChatSpamming(text, teamonly) then return "" end
+
+	if pl:IsPunished(PUNISHMENT_ANIMAL) then
+		text = table.Random(animal_noises)
+	end
 
 	pl.LastMessageText = text
 	pl.LastChat = SysTime()
@@ -674,6 +679,10 @@ hook.Add("PlayerSay", "NDB.PlayerSay", function(pl, text, teamonly)
 			print(logc)
 			NDB.LogLine(logc)
 		end
+	end
+
+	if pl:IsPunished(PUNISHMENT_ANIMAL) then
+		return text
 	end
 end)
 

@@ -25,32 +25,11 @@ end
 function NDB.LoadPunishments(fil)
 	fil = fil or NDB.PunishmentsFile
 	if file.Exists(fil, "DATA") then
-		--[[local tab = {}
-		for i, line in ipairs(string.Explode("\n", file.Read(fil, "DATA"))) do
-			local puntab = string.Explode("|", line)
-			tab[i] = {
-				["SteamID"] = puntab[1],
-				["Name"] = puntab[2],
-				["Punishment"] = tonumber(puntab[3]) or 0,
-				["Admin"] = puntab[4],
-				["Reason"] = puntab[5],
-				["Expires"] = tonumber(puntab[6]) or 0,
-				["Log"] = puntab[7]
-			}
-		end]]
-
 		NDB.Punishments = util.JSONToTable(file.Read(fil, "DATA") or "") or {}
 	end
 end
 
 function NDB.SavePunishments(fil)
-	--[[local buffer = {}
-	for k, tab in ipairs(NDB.Punishments) do
-		buffer[#buffer + 1] = tostring(tab.SteamID).."|"..string.gsub(tostring(tab.Name), "|", " ").."|"..tostring(tab.Punishment).."|"..string.gsub(tostring(tab.Admin), "|", " ").."|"..string.gsub(tostring(tab.Reason), "|", " ").."|"..tostring(tab.Expires).."|"..tostring(tab.Log or "")
-	end
-
-	file.Write(fil or NDB.PunishmentsFile, table.concat(buffer, "\n"))]]
-
 	file.Write(fil or NDB.PunishmentsFile, util.TableToJSON(NDB.Punishments) or "")
 end
 
@@ -364,7 +343,7 @@ net.Receive("nox_addpunishment", function(length, sender)
 
 	if sender:IsValid() and sender:IsModerator() then
 		if sender:IsOnlyModerator() then
-			if punishment ~= PUNISHMENT_BAN and punishment ~= PUNISHMENT_MUTE and punishment ~= PUNISHMENT_VOICEMUTE and punishment ~= PUNISHMENT_BALLPIT then
+			if punishment ~= PUNISHMENT_BAN and punishment ~= PUNISHMENT_MUTE and punishment ~= PUNISHMENT_VOICEMUTE and punishment ~= PUNISHMENT_BALLPIT and punishment ~= PUNISHMENT_ANIMAL then
 				sender:PrintMessage(HUD_PRINTTALK, "<red>Moderators can only ban, mute, voice mute, ball pit, or use premade punishments.</red>")
 				return
 			end
@@ -465,7 +444,7 @@ hook.Add("PlayerSpawn", "PunishmentsPlayerSpawn", function(pl)
 end)
 
 hook.Add("PlayerSpray", "PunishmentsSpray", function(pl)
-	if pl:IsPunishedNotify(PUNISHMENT_NOSPRAY) then
+	if pl:IsPunishedNotify(PUNISHMENT_NOSPRAY) or pl:IsPunishedNotify(PUNISHMENT_ANIMAL) then
 		return true
 	end
 end)
@@ -562,6 +541,11 @@ SetPunishedCB[PUNISHMENT_ICESKATES] = function(pl, onoff, tab, onspawn)
 		end
 	end
 end
+SetPunishedCB[PUNISHMENT_LAUGHINGSTOCK] = function(pl, onoff, tab, onspawn)
+	if onoff and onspawn then
+		PrintMessage(HUD_PRINTTALK, "Hey everyone, <red>"..pl:Name().."</red> the laughing stock is here! Everyone point and laugh at them for "..tab.Reason)
+	end
+end
 SetPunishedCB[PUNISHMENT_NOEMOTES] = function(pl, onoff, tab, onspawn)
 	pl:SetNetworkedBool("noemotes", util.tobool(onoff))
 end
@@ -595,21 +579,16 @@ SetPunishedCB[PUNISHMENT_BAN] = function(pl, onoff, tab, onspawn, silent)
 			return
 		end
 
-		--[[if tab.Expires == 0 and scripted_ents.GetStored("bantrain") then
-			pl.BanTrainComment = "Banned forever: "..tostring(tab.Reason)
-			BanTrain(pl)
-		else]]
-			if not silent then
-				BroadcastLua("surface.PlaySound(\"vo/npc/male01/gethellout.wav\")")
-			end
+		if not silent then
+			BroadcastLua("surface.PlaySound(\"vo/npc/male01/gethellout.wav\")")
+		end
 
-			if gatekeeper then
-				timer.SimpleEx(2, gatekeeper.Drop, pl:UserID(), "Banned: "..tostring(tab.Reason))
-			else
-				local commnd = "kickid "..pl:SteamID().." Banned: "..tostring(tab.Reason).."\n"
-				timer.SimpleEx(2, game.ConsoleCommand, commnd..commnd..commnd..commnd..commnd..commnd)
-			end
-		--end
+		if gatekeeper then
+			timer.SimpleEx(2, gatekeeper.Drop, pl:UserID(), "Banned: "..tostring(tab.Reason))
+		else
+			local commnd = "kickid "..pl:SteamID().." Banned: "..tostring(tab.Reason).."\n"
+			timer.SimpleEx(2, game.ConsoleCommand, commnd..commnd..commnd..commnd..commnd..commnd)
+		end
 	end
 end
 
