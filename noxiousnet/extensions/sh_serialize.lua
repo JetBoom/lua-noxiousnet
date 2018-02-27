@@ -36,6 +36,10 @@ local function MakeTable(tab, done)
 
 	for key, value in pairs(tab) do
 		local keytype = type(key)
+		if keytype == "string" and key:sub(1, 2) == "__" then -- Don't serialize keys that start with __
+			continue
+		end
+
 		local valuetype = type(value)
 
 		if allowedtypes[keytype] and allowedtypes[valuetype] then

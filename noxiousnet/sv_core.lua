@@ -67,7 +67,7 @@ include("addons/promotion_codes.lua")
 --include("addons/promotion_forums.lua")
 include("addons/promotion_tribes.lua")
 include("addons/promotion_truepatriot.lua")
-include("addons/promotion_eft1.lua")
+--include("addons/promotion_eft1.lua")
 
 if not gmod.BroadcastLua then
 	function gmod.BroadcastLua(lua)

@@ -8,7 +8,7 @@ mapstats.Stats = {}
 
 function mapstats.Load()
 	if file.Exists(GAMEMODE.FolderName.."_mapstats.txt", "DATA") then
-		mapstats.Stats = Deserialize(file.Read(GAMEMODE.FolderName.."_mapstats.txt", "DATA"))
+		mapstats.Stats = util.JSONToTable(file.Read(GAMEMODE.FolderName.."_mapstats.txt", "DATA"))
 	end
 
 	mapstats.Stats[CurrentMap] = mapstats.Stats[CurrentMap] or {}
@@ -16,7 +16,7 @@ end
 mapstats.Sync = mapstats.Load
 
 function mapstats.Save()
-	file.Write(GAMEMODE.FolderName.."_mapstats.txt", Serialize(mapstats.Stats))
+	file.Write(GAMEMODE.FolderName.."_mapstats.txt", util.TableToJSON(mapstats.Stats))
 end
 
 function mapstats.AddStat(statname, amount)

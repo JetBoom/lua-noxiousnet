@@ -85,17 +85,17 @@ timer.Create("PunishmentsSync", 30, 0, function() NDB.SyncPunishments() end)
 
 local APIKey = "814FDBCBC3EE377D5F84DAA2A24FF4DD"
 
-local function HandleSharedPlayer(pl, lenderSteamID)
+hook.Add("FamilySharingFound", "ndb_familysharing", function(pl, lenderSteamID)
 	print(string.format("FamilySharing: %s | %s has been lent Garry's Mod by %s", pl:Nick(), pl:SteamID(), lenderSteamID))
-    pl._LenderSteamID = util.SteamIDFrom64(lenderSteamID)
+	pl._LenderSteamID = util.SteamIDFrom64(lenderSteamID)
 
-    for _, tab in pairs(NDB.Punishments) do
-    	if tab.Punishment == PUNISHMENT_BAN and tab.SteamID == lenderSteamID and (tab.Expires == 0 or os.time() < tab.Expires) then
-			pl:SafeKick("Trying to use FamilySharing to bypass a ban.")
+	for _, tab in pairs(NDB.Punishments) do
+		if tab.Punishment ~= PUNISHMENT_BALLPIT and tab.Punishment ~= PUNISHMENT_LAUGHINGSTOCK and tab.SteamID == lenderSteamID and (tab.Expires == 0 or os.time() < tab.Expires) then
+			pl:SafeKick("Trying to use FamilySharing to bypass a punishment.")
 			break
 		end
 	end
-end
+end)
 
 hook.Add("PlayerAuthed", "ndb_familysharing", function(pl)
 	http.Fetch(
@@ -112,7 +112,7 @@ hook.Add("PlayerAuthed", "ndb_familysharing", function(pl)
 			if body and body.response and body.response.lender_steamid then
 				local lender = body.response.lender_steamid
 				if lender ~= "0" then
-					HandleSharedPlayer(pl, util.SteamIDFrom64(lender))
+					hook.Run("FamilySharingFound", pl, util.SteamIDFrom64(lender))
 				end
 			else
 				print(string.format("FamilySharing: Invalid Steam API response for %s | %s\n", pl:Nick(), pl:SteamID()))

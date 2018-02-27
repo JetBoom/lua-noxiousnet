@@ -188,7 +188,7 @@ function VoteMap.AddVote(pl, mapid, overridevotes)
 						msg = msg.." <pink>[+".. (NDB.MemberVotePower[memberlevel] - 1) * 100 .."% "..NDB.MemberNames[memberlevel].." Member bonus]</pink>"
 					end
 					if pl:IsInNoxSteamGroup() then
-						msg = msg.." <purple>[+10% Steam Group bonus]</purple>"
+						msg = msg.." <purple>[+25% Steam Group bonus]</purple>"
 					end
 
 					msg = msg.."."
@@ -241,7 +241,7 @@ end
 local function GetVoteMultiplier(pl)
 	local multiplier = NDB.MemberVotePower[pl:GetMemberLevel()] or 1
 
-	if pl:IsInNoxSteamGroup() then multiplier = multiplier + 0.1 end
+	if pl:IsInNoxSteamGroup() then multiplier = multiplier + 0.25 end
 
 	return multiplier
 end
