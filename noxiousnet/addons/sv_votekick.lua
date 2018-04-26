@@ -31,7 +31,8 @@ hook.Add("Initialize", "AddVoteKickChatCommands", function()
 end)
 
 NDB.AddChatCommand("/votekick", function(sender, text)
-	if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
+	sender:PrintMessage(HUD_PRINTTALK, "<red>Votekick and voteban is disabled. Use /admin to fetch an admin.</red>")
+	--[[if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
 
 	local curtime = CurTime()
 	if sender.NextVoteKickBan and sender.NextVoteKickBan > curtime then
@@ -73,11 +74,12 @@ NDB.AddChatCommand("/votekick", function(sender, text)
 		end
 	end
 
-	return ""
+	return ""]]
 end, " <name> - Vote to kick a player.")
 
 NDB.AddChatCommand("/voteban", function(sender, text)
-	if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
+	sender:PrintMessage(HUD_PRINTTALK, "<red>Votekick and voteban is disabled. Use /admin to fetch an admin.</red>")
+	--[[if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
 
 	local curtime = CurTime()
 	if sender.NextVoteKickBan and sender.NextVoteKickBan > curtime then
@@ -119,11 +121,11 @@ NDB.AddChatCommand("/voteban", function(sender, text)
 		end
 	end
 
-	return ""
+	return ""]]
 end, " <name> - Vote to ban a player.")
 
 concommand.Add("votekick", function(sender, command, arguments)
-	if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
+	--[[if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
 
 	local curtime = CurTime()
 	if sender.NextVoteKickBan and sender.NextVoteKickBan > curtime then
@@ -222,11 +224,11 @@ concommand.Add("votekick", function(sender, command, arguments)
 		end
 	else
 		sender:PrintMessage(HUD_PRINTTALK, "<red>Player not found.</red>")
-	end
+	end]]
 end)
 
 concommand.Add("voteban", function(sender, command, arguments)
-	if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
+	--[[if sender:IsPunishedNotify(PUNISHMENT_NOVOTES) then return end
 
 	local curtime = CurTime()
 	if sender.NextVoteKickBan and sender.NextVoteKickBan > curtime then
@@ -317,5 +319,5 @@ concommand.Add("voteban", function(sender, command, arguments)
 		end
 	else
 		sender:PrintMessage(HUD_PRINTTALK, "<red>Player not found.</red>")
-	end
+	end]]
 end)

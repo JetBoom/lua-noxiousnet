@@ -309,7 +309,7 @@ function NNChat.CreateIMG(fil, attributes, panel, packedstuff, maxw, maxh, nilin
 end
 
 function NNChat.CreateIMGDyn(fil, attributes, panel, packedstuff, maxw, maxh, nilinvalid, noresize)
-	local newpanel = vgui.Create("NNChatDynImage", panel)
+	local newpanel = vgui.Create(fil:sub(-4) == ".gif" and "NNChatDynImageGIF" or "NNChatDynImage", panel)
 
 	if not noresize then
 		newpanel:SetMaxSize(math.min(48, maxw or 48, maxh or 48)) -- Hard clamped limit of 48
@@ -477,16 +477,13 @@ function PANEL:SetFileName(fil)
 end
 
 local function FetchDynImage(url, rawfilename)
-	--print("fetching", "http://heavy.noxiousnet.com/"..rawfilename, "material from internet")
 	http.Fetch("https://noxiousnet.com/"..url,
 	function(body, length, headers, code)
 		if not body:lower():find("<html", 1, true) then
 			file.Write(rawfilename, body)
-			--print("successfully fetched "..rawfilename)
 		end
 	end,
 	function()
-		--print("failed to GET "..rawfilename)
 	end)
 end
 local NextHTTPFetch = 0
@@ -502,13 +499,11 @@ function PANEL:Think()
 	elseif DynMaterial[self.RawFileName] then
 		self:SetImage(DynMaterial[self.RawFileName])
 		self.Think = nil
-		--print("using cached material")
 	elseif file.Exists(self.RawFileName, "DATA") then
 		local mat = Material(self.FileName)
 		DynMaterial[self.RawFileName] = mat
 		self:SetImage(mat)
 		self.Think = nil
-		--print("pulling material from disk", self.FileName)
 	elseif not DynMaterialRequested[self.RawFileName] then
 		if time >= NextHTTPFetch then
 			NextHTTPFetch = time + 0.75
@@ -519,3 +514,198 @@ function PANEL:Think()
 end
 
 vgui.Register("NNChatDynImage", PANEL, "NNChatImage")
+
+PANEL = {}
+
+PANEL.NextThink = 0
+PANEL.DIV_ID = 0
+
+local GIFSize = 64
+local GIFGridSize = GIFSize * 32
+local GIFGridCoords = {}
+local GIFGridLength = 0
+--local GIFGridMaterial
+local GIFGridPanel
+
+hook.Add("Initialize", "CreateGIFGrid", function()
+	GIFGridPanel = vgui.Create("DHTML")
+	GIFGridPanel:SetSize(GIFGridSize, GIFSize)
+	GIFGridPanel:SetAlpha(0)
+	GIFGridPanel:SetKeyboardInputEnabled(false)
+	GIFGridPanel:SetMouseInputEnabled(false)
+
+	local html = [[<!DOCTYPE html>
+	<html>
+	<head>
+		<style>
+		html, body {
+			margin:0;
+			padding:0;
+			overflow:hidden;
+			background:rgba(0, 0, 0, 0);
+		}
+		body {
+			width:]]..GIFGridSize..[[px;
+			height:]]..GIFSize..[[px;
+		}
+		div {
+			display:inline-block;
+			width:]]..GIFSize..[[px;
+			height:]]..GIFSize..[[px;
+			background-size:contain;
+			background-position:center;
+			background-repeat:no-repeat;
+		}
+		</style>
+	</head>
+	<body>]]
+
+	for i=1, GIFGridSize / GIFSize do
+		html = html..[[<div id="i]]..i..[["></div>]]
+	end
+
+	html = html..[[</body>
+	</html>]]
+
+	GIFGridPanel:SetHTML(html)
+
+	hook.Add("Think", "GetGIFGridMaterial", function()
+		GIFGridMaterial = GIFGridPanel:GetHTMLMaterial()
+
+		if GIFGridMaterial then
+			hook.Remove("Think", "GetGIFGridMaterial")
+		end
+	end)
+end)
+
+function PANEL:SetFileName(fil)
+	self.URL = fil
+	self.RawFileName = string.GetFileFromFilename(fil)
+	self.FileName = string.StripExtension(self.RawFileName).."_gif.dat"
+
+	if not GIFGridCoords[fil] then
+		GIFGridCoords[fil] = GIFGridLength * GIFSize
+		GIFGridLength = GIFGridLength + 1
+		self.DIV_ID = GIFGridLength
+
+		AddGIFToSheet(self.URL, self.RawFileName, self.FileName, self.DIV_ID)
+	end
+
+	self.U = GIFGridCoords[fil] / GIFGridSize
+	self.EU = self.U + GIFSize / GIFGridSize
+
+	self:Think()
+end
+
+local b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+local e2 = {'', '==', '='}
+
+local function enc1(x)
+	local r, b = '', x:byte()
+
+	for i=8, 1, -1 do
+		r = r..(b % 2 ^ i - b % 2 ^ (i - 1) > 0 and '1' or '0')
+	end
+
+	return r
+end
+
+local function enc2(x)
+	if #x < 6 then return '' end
+
+	local c = 0
+
+	for i=1, 6 do
+		c = c + (x:sub(i, i) == '1' and 2 ^ (6 - i) or 0)
+	end
+
+	return b:sub(c + 1, c + 1)
+end
+
+local function base64enc(data)
+	return (data:gsub('.', enc1)..'0000'):gsub('%d%d%d?%d?%d?%d?', enc2)..e2[#data % 3 + 1]
+end
+
+local function FetchDynImageGIF(url, rawfilename)
+	http.Fetch("https://noxiousnet.com/"..url,
+	function(body, length, headers, code)
+		if not body:lower():find("<html", 1, true) then
+			file.Write(rawfilename, base64enc(body))
+		end
+	end,
+	function()
+	end)
+end
+
+local GIFQueue = {}
+
+timer.Create("GIFFetch", 0.5, 0, function()
+	if #GIFQueue == 0 then return end
+
+	local time = RealTime()
+	local done = true
+	for i, queue in pairs(GIFQueue) do
+		if queue.done then continue end
+
+		done = false
+
+		if time >= queue.timeout then
+			queue.done = true
+		elseif file.Exists(queue.filename, "DATA") then
+			DynMaterial[queue.rawfilename] = file.Read(queue.filename, "DATA")
+		elseif not DynMaterialRequested[queue.rawfilename] then
+			if time >= NextHTTPFetch then
+				NextHTTPFetch = time + 0.75
+				DynMaterialRequested[queue.rawfilename] = true
+				FetchDynImageGIF(queue.url, queue.filename)
+			end
+		end
+
+		if DynMaterial[queue.rawfilename] then
+			GIFGridPanel:RunJavascript([[document.getElementById('i]]..queue.index..[[').style.backgroundImage = "url('data:image/gif;base64,]]..DynMaterial[queue.rawfilename]..[[')"]])
+
+			queue.done = true
+		end
+	end
+
+	if done then
+		GIFQueue = {}
+	end
+end)
+
+function AddGIFToSheet(url, rawfilename, filename, index)
+	table.insert(GIFQueue, {url = url, rawfilename = rawfilename, filename = filename, index = index, done = false, timeout = RealTime() + 10})
+end
+
+function PANEL:Paint(w, h)
+	if not GIFGridMaterial then return end
+
+	if self.m_BackgroundColor then
+		surface.SetDrawColor(self.m_BackgroundColor)
+		surface.DrawRect(0, 0, w, h)
+	end
+
+	surface.SetMaterial(GIFGridMaterial)
+	surface.SetDrawColor(self.m_Color)
+
+	--[[local rot
+	if self.m_RotationDesired then
+		self.m_RotationBase = math.Approach(self.m_RotationBase, self.m_RotationDesired, self.m_RotationRate * FrameTime())
+		rot = self.m_RotationBase
+	elseif self.m_RotationBase then
+		rot = self.m_RotationBase + self.m_RotationRate * (RealTime() - self.m_CreatedTime)
+	end
+
+	if rot then
+		surface.DrawTexturedRectRotated(w / 2, h / 2, w, h, -(rot % 360))
+	else]]
+		surface.DrawTexturedRectUV(0, 0, w, h, self.U, 0, self.EU, 1)
+	--end
+
+	return true
+end
+
+function PANEL:Think()
+end
+
+vgui.Register("NNChatDynImageGIF", PANEL, "NNChatDynImage")

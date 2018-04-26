@@ -15,6 +15,7 @@ NDB.AddChatCommand("/mapstats", function(sender, text)
 	local played = mapstats.GetStat("Played")
 
 	local msg = "<silkicon icon=map> "..sender:NoParseName()..", this map has been played <red>"..played.."</red> time(s) and won <lg>"..wins.."</lg> time(s). Win rate: <lb>"..math.Round(wins / math.max(played, 1) * 100, 1).."%</lb>"
+	--local msg = "<silkicon icon=map> "..sender:NoParseName()..", this map has been played <red>"..played.."</red> time(s)"
 
 	if sender:IsMuted() then
 		sender:PrintMessage(HUD_PRINTTALK, msg)
@@ -446,11 +447,10 @@ hook.Add("PostEndRound", "NDB_ZS_PostEndRound", function(winner)
 			end]]
 		end
 
-		local wins = mapstats.GetStat("Wins")
 		local played = mapstats.GetStat("Played")
+		--PrintMessage(HUD_PRINTTALK, "<silkicon icon=world> This map has now been played "..played.." times.")
+		local wins = mapstats.GetStat("Wins")
 		PrintMessage(HUD_PRINTTALK, "<silkicon icon=world> This map has now been played "..played.." times and won "..wins.." times. <red>("..math.Round((wins / played) * 100, 2).."% survival rate)</red>")
-	--elseif GAMEMODE.ZombieEscape then
-		--PrintMessage(HUD_PRINTTALK, "<silkicon icon=cancel> Stats and rewards are currently disabled for Zombie Escape while we test it.")
 	else
 		PrintMessage(HUD_PRINTTALK, "<silkicon icon=cancel> Stat tracking and rewards are disabled with less than <red>"..TRACK_THRESHOLD.."</red> people playing.")
 	end
